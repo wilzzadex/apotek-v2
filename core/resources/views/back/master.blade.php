@@ -15,7 +15,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		@include('backend.include.vendor-css')
+		@include('back.include.vendor-css')
 		@yield('css-custom')
 	</head>
 	<!--end::Head-->
@@ -90,7 +90,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					</div>
 					<!--end::Brand-->
 					<!--begin::Aside Menu-->
-					@include('backend.include.sidebar')
+					@include('back.include.sidebar')
 					<!--end::Aside Menu-->
 				</div>
 				<!--end::Aside-->
@@ -143,7 +143,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					
 					<!--end::Content-->
 					
-                    @include('backend.include.footer')
+                    @include('back.include.footer')
 				</div>
 				<!--end::Wrapper-->
 			</div>
@@ -151,7 +151,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		</div>
 		<!--end::Main-->
 		<!-- begin::User Panel-->
-		@include('backend.include.user_profile_nav')
+		@include('back.include.user_profile_nav')
 		<!-- end::User Panel-->
 		
 		<!--begin::Chat Panel-->
@@ -159,7 +159,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		
 		<!--begin::Demo Panel-->
 	
-		@include('backend.include.vendor-js')
+		@include('back.include.vendor-js')
 		@yield('js-custom')
 		<!--end::Page Scripts-->
 	</body>

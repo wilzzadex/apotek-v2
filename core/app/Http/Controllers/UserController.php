@@ -10,12 +10,12 @@ class UserController extends Controller
     {
         $user = User::where('role','!=','superadmin')->orderBy('created_at','ASC')->get();
         $data['user'] = $user;
-        return view('backend.pages.user.user',$data);
+        return view('back.pages.user.user',$data);
     }
 
     public function add()
     {
-        return view('backend.pages.user.user_add');
+        return view('back.pages.user.user_add');
     }
 
     public function store(Request $request)
@@ -40,6 +40,24 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $data['user'] = $user;
-        return view('backend.pages.user.user_edit',$data);
+        return view('back.pages.user.user_edit',$data);
     }
+
+    public function update(Request $request,$id)
+    {
+        $user = User::findOrFail($id);
+        $user->name = $request->nama;
+        $user->role = $request->role;
+        if(isset($request->password)){
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+        return redirect(route('back.user'))->with('success','Data Berhasil di ubah');
+    }
+
+    public function destroy(Request $request)
+    {
+        $user = User::findOrFail($request->id)->delete();
+    }
+
 }

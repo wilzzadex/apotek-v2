@@ -8,6 +8,6 @@ class BackDashboardController extends Controller
 {
     public function index()
     {
-        return view('backend.pages.dashboard.dashboard');
+        return view('back.pages.dashboard.dashboard');
     }
 }

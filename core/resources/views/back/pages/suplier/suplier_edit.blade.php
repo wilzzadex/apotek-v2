@@ -1,7 +1,7 @@
-@extends('backend.master')
-{{-- @section('breadcumb')
-    Manajemen User / Tambah User
-@endsection --}}
+@extends('back.master')
+@section('breadcumb')
+    Data Suplier / Edit Suplier
+@endsection
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="margin-top: -50px">
     <div class="d-flex flex-column-fluid">
@@ -12,7 +12,7 @@
                     <!--begin::Card-->
                     <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
-                            <h3 class="card-title">Tambah User</h3>
+                            <h3 class="card-title">Edit Suplier</h3>
                         </div>
                         <div class="container">
                             @if ($errors->any())
@@ -26,57 +26,30 @@
                             @endif
                         </div>
                         <!--begin::Form-->
-                        <form method="POST" action="{{ route('back.user.store') }}" id="userAdd">
+                        <form method="POST" action="{{ route('suplier.update',$suplier->id) }}" id="userAdd">
                             @csrf
                             <div class="card-body">
-
-                                {{-- <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label text-right">Example Label</label>
-                                    <div class="col-lg-9 col-xl-6">
-                                        <div class="image-input image-input-outline" id="kt_image_1">
-                                            <div class="image-input-wrapper" style="background-image: url(assets/media/users/100_1.jpg)"></div>
-                                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
-                                                <i class="fa fa-pen icon-sm text-muted"></i>
-                                                <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
-                                                <input type="hidden" name="profile_avatar_remove" />
-                                            </label>
-                                            <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
-                                                <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                            </span>
-                                        </div>
-                                        <span class="form-text text-muted">Allowed file types: png, jpg, jpeg.</span>
-                                    </div>
-                                </div> --}}
                                 <div class="form-group">
-                                    <label>Nama
+                                    <label>Nama Suplier
                                     <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="nama" placeholder="Nama" />
+                                    <input type="text" class="form-control" value="{{ $suplier->nama_suplier }}" name="nama" placeholder="Nama Suplier" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Username
+                                    <label>Alamat
                                     <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="username" placeholder="Username" />
+                                   <textarea name="alamat" class="form-control" cols="30" rows="5">{{ $suplier->alamat }}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password
+                                    <label>Penanggung Jawab
                                     <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+                                    <input type="text" class="form-control" value="{{ $suplier->penanggung_jawab }}" name="p_jawab" placeholder="Penanggung Jawab" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Konfirmasi Password
+                                    <label>No Telpon
                                     <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" name="kpassword" placeholder="Password" />
+                                    <input type="text" class="form-control" value="{{ $suplier->no_telp }}" name="no_telp" placeholder="No telp" />
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Role
-                                    <span class="text-danger">*</span></label>
-                                    <select name="role" class="form-control" required>
-                                        <option value="">- Pilih Role -</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="apoteker">Apoteker</option>
-                                        <option value="kasir">Kasir</option>
-                                    </select>
-                                </div>
+                                
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -119,38 +92,29 @@
             ignore: "",
             rules: {
                 nama : "required",
-                username: {
+                nama: {
                     required: true,
                     minlength: 3
                 },
-                password: {
+                p_jawab: {
                     required: true,
-                    minlength: 5
+                    minlength: 3
                 },
-                kpassword: {
+                alamat: {
                     required: true,
-                    minlength: 5,
-                    equalTo: "#password"
+                    minlength: 10
                 },
-                email: {
+                no_telp: {
                     required: true,
-                    email: true
+                    maxlength: 13,
+                    digits: true
                 },
-                agree: "required"
+                
             },
             messages: {
-                username: {
-                    required: "Please enter a username",
-                    minlength: "Your username must consist of at least 3 characters"
-                },
-                password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long"
-                },
-                kpassword: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long",
-                    equalTo: "Please enter the same password as above"
+                no_telp: {
+                    maxlength : "Maksimal 13 digit !",
+                    digits: "Masukan dalam bentuk angka saja !"
                 },
             },
             errorElement: "em",

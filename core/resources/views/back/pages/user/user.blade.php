@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('back.master')
 @section('breadcumb')
     Manajemen User
 @endsection
@@ -43,7 +43,7 @@
                                 {{-- <td>{{ $item->id }}</td> --}}
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->username }}</td>
-                                <td>{{ $item->role }}</td>
+                                <td>{{ ucfirst($item->role) }}</td>
                                 <td nowrap="nowrap">
                                     <div class="dropdown dropdown-inline mr-4">
                                         <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,7 +51,7 @@
                                         </button>
                                         <div class="dropdown-menu" style="">
                                             <a class="dropdown-item" href="{{ route('back.user.edit',$item->id) }}">Edit</a>
-                                            <a class="dropdown-item" href="#">Hapus</a>
+                                            <a class="dropdown-item" href="javascript:void(0)" onclick="deleteUser(this)" data-id="{{ $item->id }}">Hapus</a>
                                         </div>
                                     </div>
                                 </td>
@@ -79,5 +79,47 @@
     @if(session('success'))
         customAlert('Sukses !','{{ session("success") }}','success')
     @endif
+
+    function deleteUser(obj){
+        let id = $(obj).attr('data-id');
+        // console.log(id);
+        Swal.fire({
+            title: "Anda Yakin ?",
+            text: "Data akan terhapus permanen",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Hapus saja!",
+            cancelButtonText: "Tidak, Batalkan!",
+            reverseButtons: true
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    url : '{{ route("back.user.destroy") }}',
+                    type : 'get',
+                    data : {
+                        id : id,
+                    },
+                    beforeSend: function(){
+                        KTApp.blockPage({
+                            overlayColor: '#000000',
+                            state: 'danger',
+                            message: 'Silahkan Tunggu...'
+                        });
+                    },
+                    success: function(res){
+                        KTApp.unblockPage();
+                        // console.log(res);
+                        Swal.fire(
+                            "Terhapus!",
+                            "Data berhasil di hapus.",
+                            "success"
+                        ).then(function(){
+                            window.location.reload();
+                        })
+                    }
+                })
+            }
+        });
+    }
 </script>
 @endsection

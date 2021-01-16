@@ -1,4 +1,4 @@
-@extends('backend.master')
+@extends('back.master')
 @section('breadcumb')
     Dashboard
 @endsection

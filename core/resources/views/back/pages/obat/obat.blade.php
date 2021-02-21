@@ -1,6 +1,6 @@
 @extends('back.master')
 @section('breadcumb')
-    Data Unit
+    Data Obat
 @endsection
 
 @section('content')
@@ -15,10 +15,10 @@
 
                    </div>
                     <div class="card-toolbar">
-                        <a href="{{ route('unit.add') }}" class="btn btn-primary font-weight-bolder">
+                        <a href="{{ route('obat.add') }}" class="btn btn-primary font-weight-bolder">
                         <span class="svg-icon svg-icon-md">
                            <i class="fas fa-plus"></i>
-                        </span>Tambah Unit</a>
+                        </span>Tambah Obat</a>
                         <!--end::Button-->
                     </div>
                 </div>
@@ -30,48 +30,33 @@
                             <tr>
                                 <th>No.</th>
                                 <th>Nama</th>
-                                <th>Jumlah Satuan Terkecil</th>
+                                <th>Alamat</th>
+                                <th>Penanggung Jawab</th>
+                                <th>No Telpon</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($unit as $key => $item)
+                            {{-- @foreach ($suplier as $key => $item)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
-                                    <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->satuan_terkecil }}</td>
+                                    <td>{{ $item->nama_suplier }}</td>
+                                    <td>{{ $item->alamat }}</td>
+                                    <td>{{ $item->penanggung_jawab }}</td>
+                                    <td>{{ $item->no_telp }}</td>
                                     <td nowrap="nowrap">
                                         <div class="dropdown dropdown-inline mr-4">
                                             <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="ki ki-bold-more-hor"></i>
                                             </button>
                                             <div class="dropdown-menu" style="">
-                                                <a class="dropdown-item" href="{{ route('unit.edit',$item->id) }}">Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="deleteUnit(this)" data-id="{{ $item->id }}">Hapus</a>
+                                                <a class="dropdown-item" href="{{ route('suplier.edit',$item->id) }}">Edit</a>
+                                                <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSuplier(this)" data-id="{{ $item->id }}">Hapus</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach
-                        {{-- @foreach ($user as $key => $item)
-                            <tr>
-                                <td>{{ $key+1 }}</td>
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->username }}</td>
-                                <td>{{ ucfirst($item->role) }}</td>
-                                <td nowrap="nowrap">
-                                    <div class="dropdown dropdown-inline mr-4">
-                                        <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="ki ki-bold-more-hor"></i>
-                                        </button>
-                                        <div class="dropdown-menu" style="">
-                                            <a class="dropdown-item" href="{{ route('back.user.edit',$item->id) }}">Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0)" onclick="deleteUser(this)" data-id="{{ $item->id }}">Hapus</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach --}}
+                            @endforeach --}}
                         </tbody>
                     </table>
                     <!--end: Datatable-->
@@ -95,7 +80,7 @@
         customAlert('Sukses !','{{ session("success") }}','success')
     @endif
 
-    function deleteUnit(obj){
+    function deleteSuplier(obj){
         let id = $(obj).attr('data-id');
         // console.log(id);
         Swal.fire({
@@ -109,7 +94,7 @@
         }).then(function(result) {
             if (result.value) {
                 $.ajax({
-                    url : '{{ route("unit.destroy") }}',
+                    url : '{{ route("suplier.destroy") }}',
                     type : 'get',
                     data : {
                         id : id,

@@ -12,5 +12,6 @@ class Suplier extends Model
         'alamat',
         'penanggung_jawab',
         'no_telp',
+        'jumlah_satuan_terkecil',
     ];
 }

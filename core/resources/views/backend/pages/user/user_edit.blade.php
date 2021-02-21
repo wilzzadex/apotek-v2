@@ -1,6 +1,6 @@
-@extends('back.master')
+@extends('backend.master')
 @section('breadcumb')
-    Data Unit / Edit Unit
+    Manajemen User / Edit User
 @endsection
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="margin-top: -50px">
@@ -12,7 +12,7 @@
                     <!--begin::Card-->
                     <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Unit</h3>
+                            <h3 class="card-title">Edit User</h3>
                         </div>
                         <div class="container">
                             @if ($errors->any())
@@ -26,18 +26,38 @@
                             @endif
                         </div>
                         <!--begin::Form-->
-                        <form method="POST" action="{{ route('unit.update',$unit->id) }}" id="userAdd">
+                        <form method="POST" action="{{ route('back.user.update',$user->id) }}" id="userAdd">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Nama Unit
+                                    <label>Nama
                                     <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{ $unit->nama }}" name="nama" placeholder="Nama Unit" />
+                                    <input type="text" class="form-control" value="{{ $user->name }}" name="nama" placeholder="Nama" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Jumlah Satuan Terkecil
+                                    <label>Username
                                     <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{ $unit->jumlah_satuan_terkecil }}" name="jumlah" placeholder="Jumlah" />
+                                    <input type="text" class="form-control" value="{{ $user->username }}" name="username" placeholder="Username" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password
+                                    <span class="text-danger">(diisi jika ingin ubah password)</span></label>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Konfirmasi Password
+                                    <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" name="kpassword" placeholder="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Role
+                                    <span class="text-danger">*</span></label>
+                                    <select name="role" class="form-control" required>
+                                        <option value="">- Pilih Role -</option>
+                                        <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                                        <option value="apoteker {{ $user->role == 'apoteker' ? 'selected' : '' }}">Apoteker</option>
+                                        <option value="kasir" {{ $user->role == 'kasir' ? 'selected' : '' }}>Kasir</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -80,19 +100,37 @@
             },
             ignore: "",
             rules: {
-                nama: {
+                nama : "required",
+                username: {
                     required: true,
                     minlength: 3
                 },
-                jumlah: {
-                    required: true,
+                password: {
+                    minlength: 5
                 },
-              
+                kpassword: {
+                    minlength: 5,
+                    equalTo: "#password"
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+                agree: "required"
             },
             messages: {
-                no_telp: {
-                    maxlength : "Maksimal 13 digit !",
-                    digits: "Masukan dalam bentuk angka saja !"
+                username: {
+                    required: "Please enter a username",
+                    minlength: "Your username must consist of at least 3 characters"
+                },
+                password: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                kpassword: {
+                    required: "Please provide a password",
+                    minlength: "Your password must be at least 5 characters long",
+                    equalTo: "Please enter the same password as above"
                 },
             },
             errorElement: "em",

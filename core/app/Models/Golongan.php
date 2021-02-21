@@ -6,6 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Golongan extends Model
 {
-    protected $table = 'golongan_obat';
-    protected $timestamps = false;
+    protected $table = 'golongan';
 }

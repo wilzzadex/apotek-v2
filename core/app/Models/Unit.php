@@ -9,5 +9,6 @@ class Unit extends Model
     protected $table = 'unit';
     protected $fillable = [
         'nama',
+        'satuan_terkecil',
     ];
 }

@@ -22,6 +22,7 @@ class UnitController extends Controller
     {
         $unit = new Unit();
         $unit->nama = $request->nama;
+        $unit->satuan_terkecil = $request->jumlah;
         $unit->save();
 
         return redirect(route('unit'))->with('success','Data Berhasil di simpan !');
@@ -38,6 +39,7 @@ class UnitController extends Controller
     {
         $unit = Unit::findOrFail($id);
         $unit->nama = $request->nama;
+        $unit->jumlah_satuan_terkecil = $request->jumlah;
         $unit->save();
         return redirect(route('unit'))->with('success','Data Berhasil di ubah !');
 

@@ -1,6 +1,6 @@
 @extends('back.master')
 @section('breadcumb')
-    Data Unit / Edit Unit
+    Data Suplier / Tambah Obat
 @endsection
 @section('content')
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="margin-top: -50px">
@@ -12,7 +12,7 @@
                     <!--begin::Card-->
                     <div class="card card-custom gutter-b example example-compact">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Unit</h3>
+                            <h3 class="card-title">Tambah Obat</h3>
                         </div>
                         <div class="container">
                             @if ($errors->any())
@@ -26,19 +26,49 @@
                             @endif
                         </div>
                         <!--begin::Form-->
-                        <form method="POST" action="{{ route('unit.update',$unit->id) }}" id="userAdd">
+                        <form method="POST" action="{{ route('obat.store') }}" id="userAdd">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label>Nama Unit
+                                    <label>Kode Obat
                                     <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" value="{{ $unit->nama }}" name="nama" placeholder="Nama Unit" />
+                                    <input type="text" value="{{ old('kode_obat') }}" style="text-transform: uppercase" id="kt_maxlength_3" maxlength="10" class="form-control" name="kode_obat" placeholder="Contoh : OBT028971" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Jumlah Satuan Terkecil
+                                    <label>Nama Obat</label>
                                     <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{ $unit->jumlah_satuan_terkecil }}" name="jumlah" placeholder="Jumlah" />
+                                    <input type="text" class="form-control" value="{{ old('nama_obat') }}" name="nama_obat" placeholder="Nama Obat" />
                                 </div>
+                                <div class="form-group">
+                                    <label>Kategori Obat</label>
+                                    <span class="text-danger">*</span></label>
+                                    <select name="kategori_obat" id="kategori_obat" style="width: 100%" class="form-control">
+                                        <option value="">- Pilih Kategori -</option>
+                                        @foreach ($kategori as $item)
+                                            <option value="{{ $item->id }}" {{ $item->id == old('kategori_obat') ? 'selected' : '' }}>{{ $item->nama_kategori }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Golongan Obat</label>
+                                    <span class="text-danger">*</span></label>
+                                    <select name="golongan_obat" id="golongan_obat" style="width: 100%" class="form-control">
+                                        <option value="">- Pilih Golongan -</option>
+                                        @foreach ($golongan as $item)
+                                            <option value="{{ $item->id }}" {{ $item->id == old('golongan_obat') ? 'selected' : '' }}>{{ $item->nama_golongan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Stok Minimum
+                                    <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="stok_minimum" value="{{ old('stok_minimum') }}" data-toggle="tooltip" title="Stok minimum adalah patokan jika obat kurang dari stok minimum akan ada peringatan" placeholder="Stok Minimum ..." />
+                                </div>
+                                <div class="form-group">
+                                    <label>Keterangan</label>
+                                   <textarea name="keterangan" class="form-control" cols="30" rows="5">{{ old('keterangan') }}</textarea>
+                                </div>
+                               
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -61,6 +91,9 @@
         customAlert('Sukses !','{{ session("success") }}','success')
     @endif
 
+    $('#kategori_obat').select2();
+    $('#golongan_obat').select2();
+
     var runValidator = function () {
         var form = $('#userAdd');
         var errorHandler = $('.errorHandler', form);
@@ -80,14 +113,22 @@
             },
             ignore: "",
             rules: {
-                nama: {
-                    required: true,
-                    minlength: 3
-                },
-                jumlah: {
-                    required: true,
-                },
-              
+               kode_obat : {
+                   required : true,
+               },
+               nama_obat : {
+                   required : true,
+               },
+               kategori_obat : {
+                   required : true,
+               },
+               golongan_obat : {
+                   required : true,
+               },
+               stok_minimum : {
+                   required : true,
+               }
+                
             },
             messages: {
                 no_telp: {

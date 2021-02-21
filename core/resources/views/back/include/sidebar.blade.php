@@ -18,7 +18,7 @@
                 <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
             </li> --}}
 
-            <li class="menu-item menu-item-submenu {{ Request::is('admin/unit*') || Request::is('admin/user*') || Request::is('admin/suplier*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
+            <li class="menu-item menu-item-submenu {{ Request::is('admin/unit*') ||  Request::is('admin/obat*') || Request::is('admin/user*') || Request::is('admin/suplier*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <span class="svg-icon menu-icon">
                         <span class="svg-icon menu-icon">
@@ -79,13 +79,73 @@
                         </li>
 
                         <li class="menu-item {{ Request::is('admin/obat*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                            <a href="{{ route('unit') }}" class="menu-link">
+                            <a href="{{ route('obat') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
                                 <span class="menu-text">Data Obat</span>
                             </a>
                         </li>
+                       
+                    </ul>
+                </div>
+            </li>
+            <li class="menu-item menu-item-submenu {{ Request::is('admin/transaksi*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+                            <i class="fas fa-shopping-cart"></i>
+                            <!--end::Svg Icon-->
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text">Transaksi</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu" kt-hidden-height="80" style="">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        <li class="menu-item {{ Request::is('admin/transaksi/order*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('order') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Pembelian Obat</span>
+                            </a>
+                        </li>
+                        
+                       
+                       
+                    </ul>
+                </div>
+            </li>
+            <li class="menu-item menu-item-submenu {{ Request::is('admin/setting*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
+                <a href="javascript:;" class="menu-link menu-toggle">
+                    <span class="svg-icon menu-icon">
+                        <span class="svg-icon menu-icon">
+                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+                            <i class="fas fa-cogs"></i>
+                            <!--end::Svg Icon-->
+                        </span>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text">Pengaturan Aplikasi</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="menu-submenu" kt-hidden-height="80" style="">
+                    <i class="menu-arrow"></i>
+                    <ul class="menu-subnav">
+                        <li class="menu-item {{ Request::is('admin/transaksi/order*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('order') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Pembelian Obat</span>
+                            </a>
+                        </li>
+                        
+                       
                        
                     </ul>
                 </div>

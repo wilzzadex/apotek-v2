@@ -15,7 +15,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <html lang="en">
 	<!--begin::Head-->
 	<head>
-		@include('back.include.vendor-css')
+		@include('backend.include.vendor-css')
 		@yield('css-custom')
 	</head>
 	<!--end::Head-->
@@ -26,8 +26,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 			<!--begin::Logo-->
 			<a href="index.html">
-				{{-- <img alt="Logo" src="{{ asset('assets/backend') }}/media/logos/logo-light.png" /> --}}
-				<h3>A</h3>
+				<img alt="Logo" src="assets/media/logos/logo-light.png" />
 			</a>
 			<!--end::Logo-->
 			<!--begin::Toolbar-->
@@ -70,7 +69,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
 						<a href="index.html" class="brand-logo">
-							<img alt="Logo" src="{{ asset('assets/backend') }}/media/logos/logo-light.png" />
+							<img alt="Logo" src="assets/media/logos/logo-light.png" />
 						</a>
 						<!--end::Logo-->
 						<!--begin::Toggle-->
@@ -91,7 +90,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					</div>
 					<!--end::Brand-->
 					<!--begin::Aside Menu-->
-					@include('back.include.sidebar')
+					@include('backend.include.sidebar')
 					<!--end::Aside Menu-->
 				</div>
 				<!--end::Aside-->
@@ -144,7 +143,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					
 					<!--end::Content-->
 					
-                    @include('back.include.footer')
+                    @include('backend.include.footer')
 				</div>
 				<!--end::Wrapper-->
 			</div>
@@ -152,7 +151,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		</div>
 		<!--end::Main-->
 		<!-- begin::User Panel-->
-		@include('back.include.user_profile_nav')
+		@include('backend.include.user_profile_nav')
 		<!-- end::User Panel-->
 		
 		<!--begin::Chat Panel-->
@@ -160,7 +159,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		
 		<!--begin::Demo Panel-->
 	
-		@include('back.include.vendor-js')
+		@include('backend.include.vendor-js')
 		@yield('js-custom')
 		<!--end::Page Scripts-->
 	</body>

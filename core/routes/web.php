@@ -45,5 +45,15 @@ Route::prefix('admin')->group(function(){
 
     Route::prefix('obat')->group(function(){
         Route::get('/',['as' => 'obat','uses' => 'ObatController@index']);
+        Route::get('add',['as' => 'obat.add','uses' => 'ObatController@add']);
+        Route::post('store',['as' => 'obat.store','uses' => 'ObatController@store']);
+    });
+
+    Route::prefix('transaksi')->group(function(){
+        Route::prefix('order')->group(function(){
+            Route::get('/',['as' => 'order', 'uses' => 'OrderController@index']);
+            Route::post('add_temp',['as' => 'order.temp', 'uses' => 'OrderController@addTemp']);
+            Route::get('tabelrender',['as' => 'order.render.tabel', 'uses' => 'OrderController@renderTabel']);
+        });
     });
 });

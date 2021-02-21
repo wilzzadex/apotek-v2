@@ -34,7 +34,13 @@
                                     <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="nama" placeholder="Nama Unit" />
                                 </div>
+                                <div class="form-group">
+                                    <label>Jumlah Satuan Terkecil
+                                    <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="jumlah" placeholder="Jumlah" />
+                                </div>
                             </div>
+                                
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             </div>
@@ -78,6 +84,9 @@
                 nama: {
                     required: true,
                     minlength: 3
+                },
+                jumlah: {
+                    required: true,
                 },
               
             },

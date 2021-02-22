@@ -1,7 +1,7 @@
 <base href="">
 		<meta charset="utf-8" />
-		<title>Apotek V2</title>
-		<meta name="description" content="Metronic admin dashboard live demo. Check out all the features of the admin panel. A large number of settings, additional services and widgets." />
+		<title>{{ $pengaturan->nama_aplikasi }}</title>
+		<meta name="description" content="{{ $pengaturan->nama_aplikasi }}" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="https://keenthemes.com/metronic" />
 		<!--begin::Fonts-->
@@ -23,4 +23,4 @@
 		<link href="{{ asset('assets/backend/') }} /plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Themes-->
-		<link rel="shortcut icon" href="{{ asset('assets/backend/') }} /media/logos/favicon.ico" />
+		<link rel="shortcut icon" href="{{ asset('file_ref/pengaturan_aplikasi/'.$pengaturan->logo_aplikasi) }}" />

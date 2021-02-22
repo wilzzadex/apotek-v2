@@ -1,4 +1,6 @@
-
+@php
+	$pengaturan = \App\Models\Pengaturan_Aplikasi::where("apotek_id",1)->first();
+@endphp
 <!DOCTYPE html>
 <!--
 Template Name: Metronic - Bootstrap 4 HTML, React, Angular 10 & VueJS Admin Dashboard Theme
@@ -69,8 +71,9 @@ License: You must have a valid license purchased only from themeforest(the above
 					<!--begin::Brand-->
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
-						<a href="index.html" class="brand-logo">
-							<img alt="Logo" src="{{ asset('assets/backend') }}/media/logos/logo-light.png" />
+						<a href="{{ route('back.dashboard') }}" class="brand-logo">
+							<img style="width:30%" alt="Logo" src="{{ asset('file_ref/pengaturan_aplikasi/'.$pengaturan->logo_aplikasi) }}" />
+							{{-- <h3>{{ $pengaturan->nama_aplikasi }}</h3> --}}
 						</a>
 						<!--end::Logo-->
 						<!--begin::Toggle-->

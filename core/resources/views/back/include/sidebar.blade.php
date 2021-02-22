@@ -120,7 +120,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="menu-item menu-item-submenu {{ Request::is('admin/setting*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
+            <li class="menu-item menu-item-submenu {{ Request::is('admin/pengaturan*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <span class="svg-icon menu-icon">
                         <span class="svg-icon menu-icon">
@@ -136,12 +136,12 @@
                 <div class="menu-submenu" kt-hidden-height="80" style="">
                     <i class="menu-arrow"></i>
                     <ul class="menu-subnav">
-                        <li class="menu-item {{ Request::is('admin/transaksi/order*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                            <a href="{{ route('order') }}" class="menu-link">
+                        <li class="menu-item {{ Request::is('admin/pengaturan/tampilan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('pengaturan.tampilan') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Pembelian Obat</span>
+                                <span class="menu-text">Tampilan Aplikasi</span>
                             </a>
                         </li>
                         

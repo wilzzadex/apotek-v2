@@ -54,6 +54,17 @@ Route::prefix('admin')->group(function(){
             Route::get('/',['as' => 'order', 'uses' => 'OrderController@index']);
             Route::post('add_temp',['as' => 'order.temp', 'uses' => 'OrderController@addTemp']);
             Route::get('tabelrender',['as' => 'order.render.tabel', 'uses' => 'OrderController@renderTabel']);
+            Route::get('otherrender',['as' => 'order.render.other', 'uses' => 'OrderController@renderLain']);
+            Route::get('destroyobat',['as' => 'order.destroy.obat', 'uses' => 'OrderController@deleteObat']);
+            Route::get('editobat',['as' => 'order.edit.obat', 'uses' => 'OrderController@editObat']);
+            Route::post('updateobat',['as' => 'order.update.temp', 'uses' => 'OrderController@updateObat']);
+        });
+    });
+
+    Route::prefix('pengaturan')->group(function(){
+        Route::prefix('tampilan')->group(function(){
+            Route::get('/',['as' => 'pengaturan.tampilan', 'uses' => 'SettingController@tampilan']);
+            Route::post('update/{id}',['as' => 'pengaturan.update', 'uses' => 'SettingController@updateTampilan']);
         });
     });
 });

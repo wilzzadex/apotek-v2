@@ -102,21 +102,22 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <label>Total</label>
-                                            <input type="text" readonly name="no_faktur" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="subtotal_semua">
+                                            <label>Total 1 (Rp)</label>
+                                            <input type="text" readonly name="total_1" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="total_1">
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-12">
-                                                <label>Diskon (%)</label>
+                                                <label>Potongan Penjualan (Rp)</label>
                                             </div>
-                                            <div class="col-4">
-
-                                                <input type="text" name="no_faktur" class="form-control" value="0" placeholder="No Faktur" id="diskon_total">
-                                            </div>
-                                            <div class="col-8">
-                                                <input type="text" readonly name="no_faktur" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="nominal_diskon_total">
+                                           
+                                            <div class="col-12">
+                                                <input type="text" readonly name="pot_pen" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="pot_pen">
 
                                             </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Total 2 (Rp)</label>
+                                            <input type="text" readonly name="total_2" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="total_2">
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -125,7 +126,7 @@
                                                 <label>Pajak (%)</label>
                                             </div>
                                             <div class="col-4">
-                                                <input type="text" name="pajak_total" value="10" class="form-control" value="0" placeholder="No Faktur" id="pajak_total">
+                                                <input type="text" name="pajak_total" value="0" min="0" class="form-control" value="0" placeholder="No Faktur" id="pajak_total">
                                             </div>
                                             <div class="col-8">
                                                 <input type="text" readonly name="nominal_pajak_total" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="nominal_pajak_total">
@@ -133,8 +134,12 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Biaya</label>
-                                            <input type="text" name="biaya_lain" class="form-control"  data-toggle="tooltip" title="Jika ada biaya tambahan seperti biaya pengiriman barang atau jasa bisa ditambahkan di sini" value="0" placeholder="No Faktur" id="biaya_lain">
+                                            <label>Biaya Lainnya (%)</label>
+                                            <input type="text" name="biaya_lain" class="form-control"  data-toggle="tooltip" title="Jika ada biaya tambahan seperti biaya pengiriman barang atau jasa bisa ditambahkan di sini" value="0" placeholder="Biaya Lain ..." id="biaya_lain">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Jumlah Tagihan</label>
+                                            <input type="text" readonly name="jumlah_tagihan" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="jumlah_tagihan">
                                         </div>
                                     </div>
                                 </div>
@@ -219,19 +224,6 @@
                                     <label>Margin Harga Jual (%)</label>
                                     <input type="number" name="margin_jual" class="form-control" min="0" placeholder="Margin Harga Jual" id="margin_jual">
                                 </div>
-                                
-                                {{-- <div class="col-4 mt-2">
-                                    <label>Subtotal</label>
-                                    <input type="text" readonly name="harga_beli" class="form-control form-control-solid" value="0" placeholder="No Faktur" id="subtotal">
-                                </div>
-                                <div class="col-4 mt-2">
-                                    <label>Nominal Diskon</label>
-                                    <input type="text" name="harga_beli" class="form-control form-control-solid" value="0" placeholder="No Faktur" id="nomonal_diskon">
-                                </div>
-                                <div class="col-4 mt-2">
-                                    <label>Harga Jual</label>
-                                    <input type="text" name="margin_jual" class="form-control form-control-solid" value="0" placeholder="No Faktur" id="harga_jual">
-                                </div> --}}
                                 <div class="col-12 mt-3">
                                     <button type="submit" class="btn btn-primary float-right" id="btn-tambah">Tambah</button>
                                     {{-- <button type="button" class="btn btn-warning float-right" id="btn-ubah">Ubah</button> --}}
@@ -245,16 +237,23 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" id="modalEditObat" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+</div>
+
 @endsection
 @section('js-custom')
 <script src="{{ asset('assets/backend') }} /plugins/custom/datatables/datatables.bundle.js"></script>
 
 <script>
-    renderTabel();
-
-    $('#user_table').DataTable({
-        responsive: true,
+    $(document).ready(function(){
+        renderTabel();
+        renderLain();
     })
+    
+
+    
     @if(session('success'))
         customAlert('Sukses !','{{ session("success") }}','success')
     @endif
@@ -265,7 +264,7 @@
     $('#kt_datetimepicker_4').datetimepicker({
         format: 'L'
     });
-    $('#kt_datetimepicker_5').datetimepicker({
+    $('#kt_datetimepicker_3').datetimepicker({
         format: 'L'
     });
 
@@ -293,6 +292,8 @@
     });
 
     $('#harga_beli' ).mask('000.000.000', {reverse: true});
+    $('#biaya_lain' ).mask('000.000.000', {reverse: true});
+   
 
     function renderTabel(){
         $.ajax({
@@ -303,6 +304,122 @@
             }
         })
     }
+
+    function renderLain(){
+        $.ajax({
+            url : '{{ route("order.render.other") }}',
+            type : 'get',
+            success: function(res){
+                $('#total_1').mask('000.000.000', {reverse: true}).val(res.total_1).trigger('input');
+                $('#total_2').mask('000.000.000', {reverse: true}).val(res.total_2).trigger('input');
+                $('#pot_pen').mask('000.000.000', {reverse: true}).val(res.pot_pen).trigger('input');
+                hitungPajak(parseInt(res.total_2));
+                hitungTagihan();
+            }
+        })
+    }
+
+    function hitungPajak(total){
+        let pajak_total = $('#pajak_total').val();
+        let biaya_lain = $('#biaya_lain').val();
+        let nominal_pajak = ((Number(pajak_total) / 100) * parseInt(total)).toFixed(2); 
+        $('#nominal_pajak_total').mask('000.000.000', {reverse: true}).val(parseInt(nominal_pajak)).trigger('input');
+        $('#jumlah_tagihan').val()
+    }
+
+    function hitungTagihan(){
+        let total = ($('#total_2').val()).replace(/\./g, "");
+        let nominal_pajak = ($('#nominal_pajak_total').val()).replace(/\./g, "");
+        let biaya = ($('#biaya_lain').val()).replace(/\./g, "");
+        let tagihan = parseInt(total) + parseInt(nominal_pajak) + parseInt(biaya);
+        $('#jumlah_tagihan').mask('000.000.000', {reverse: true}).val(parseInt(tagihan)).trigger('input');
+    }
+
+
+    $('#biaya_lain').on('keyup', function(){
+        let values = $(this).val();
+        let fix_val = values.replace(/\./g, "");
+        hitungTagihan();
+    })
+
+    $('#pajak_total').on('keyup', function(){
+        let total = $('#total_2').val();
+        let fix_total = total.replace(/\./g, "");
+        let values = $(this).val();
+        let fix_val = values.replace(/\./g, "");
+        let nominal_pajak = ((Number(fix_val) / 100) * parseInt(fix_total))
+        $('#nominal_pajak_total').mask('000.000.000', {reverse: true}).val(parseInt(nominal_pajak)).trigger('input');
+        hitungTagihan()
+    })
+
+    function editObat(obj){
+        let id = $(obj).attr('id');
+        $.ajax({
+            url : '{{ route("order.edit.obat") }}',
+            type : 'get',
+            data : {
+                id : id,
+            },
+            beforeSend: function(){
+                myBlock()
+            },
+            success : function(res){
+                $('#modalEditObat').html(res);
+                $('#modalEditObat').modal('show');
+                KTApp.unblockPage();
+                $('#harga_beli_edit' ).mask('000.000.000', {reverse: true});
+                $('#obat_id_edit').select2();
+                $('#unit_id_edit').select2();
+                $('#tgl_exp_edit').datetimepicker({
+                    format: 'L'
+                });
+                runValidatoredit();
+            }
+        })
+    }
+
+    function deleteObat(obj){
+        let id = $(obj).attr('id');
+        Swal.fire({
+            title: "Anda Yakin ?" + id,
+            text: "Data akan terhapus permanen",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya, Hapus saja!",
+            cancelButtonText: "Tidak, Batalkan!",
+            reverseButtons: true
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    url : '{{ route("order.destroy.obat") }}',
+                    type : 'get',
+                    data : {
+                        id : id,
+                    },
+                    beforeSend: function(){
+                        KTApp.blockPage({
+                            overlayColor: '#000000',
+                            state: 'danger',
+                            message: 'Silahkan Tunggu...'
+                        });
+                        
+                    },
+                    success: function(res){
+                        KTApp.unblockPage();
+                        // console.log(res);
+                        Swal.fire(
+                            "Terhapus!",
+                            "Data berhasil di hapus.",
+                            "success"
+                        );
+                        renderTabel();
+                        renderLain();
+                    }
+                })
+            }
+        });
+    }
+
 
     var runValidator = function () {
         var form = $('#form_add_obat');
@@ -379,13 +496,13 @@
                             myBlock()
                         },
                         success : function(res){
-                            console.log(res)
                             
                             KTApp.unblockPage();
                             if(res == 'ada'){
                                 customAlert('Gagal','Obat sudah ada di daftar','warning');
                             }else{
-                                $('#renderTabel').html(res.view)
+                                renderTabel();
+                                renderLain();
                             }
                         },
                         error : function(){
@@ -393,6 +510,100 @@
                         }
                     })
                     // console.log(form.serialize());
+                }
+            }
+        });
+    };
+    var runValidatoredit = function () {
+        var form = $('#form_edit_obat');
+        var errorHandler = $('.errorHandler', form);
+        var successHandler = $('.successHandler', form);
+        form.validate({
+            errorElement: "span", // contain the error msg in a span tag
+            errorClass: 'invalid-feedback',
+            errorPlacement: function ( error, element ) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass( "invalid-feedback" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.next( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            ignore: "",
+            rules: {
+               obat_id : {
+                   required : true,
+               },
+               no_batch : {
+                   required : true,
+                   maxlength: 20,
+                   minlength:5,
+               },
+               jumlah_obat : {
+                   required : true,
+                   digits : true,
+               },
+               unit_id : {
+                   required : true,
+               },
+               tgl_exp : {
+                   required : true,
+               },
+               harga_beli : {
+                   required : true,
+               },
+            },
+            messages: {
+                
+            },
+            errorElement: "em",
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                successHandler.hide();
+                errorHandler.show();
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+            },
+            success: function (label, element) {
+                label.addClass('help-block valid');
+                // mark the current input as valid and display OK icon
+                $(element).closest('.validate ').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
+            },
+            submitHandler: function (form) {
+                // $('#alert').hide();
+                successHandler.show();
+                errorHandler.hide();
+                // submit form
+                if (successHandler.show()) {
+                   
+                    $.ajax({
+                        url : '{{ route("order.update.temp") }}',
+                        type : 'post',
+                        data : $('#form_edit_obat').serialize(),
+                        beforeSend: function(){
+                            myBlock()
+                        },
+                        success : function(res){
+                            // console.log(res)
+                            customAlert('Sukses','Data berhasil di ubah','success')
+                            KTApp.unblockPage();
+                            if(res == 'ada'){
+                                customAlert('Gagal','Obat sudah ada di daftar','warning');
+                            }else{
+                                $('#modalEditObat').modal('hide');
+                                renderTabel();
+                                renderLain();
+                            }
+                        },
+                        error : function(){
+                            KTApp.unblockPage();
+                        }
+                    })
                 }
             }
         });

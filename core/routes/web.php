@@ -58,6 +58,12 @@ Route::prefix('admin')->group(function(){
             Route::get('destroyobat',['as' => 'order.destroy.obat', 'uses' => 'OrderController@deleteObat']);
             Route::get('editobat',['as' => 'order.edit.obat', 'uses' => 'OrderController@editObat']);
             Route::post('updateobat',['as' => 'order.update.temp', 'uses' => 'OrderController@updateObat']);
+            Route::post('store',['as' => 'order.store', 'uses' => 'OrderController@storeOrder']);
+        });
+
+        Route::prefix('histori_pembelian')->group(function(){
+            Route::get('/',['as' => 'histori.pembelian', 'uses' => 'HistoriPembelianController@index']);
+            Route::get('datapembelian',['as' => 'histori.pembelian.data', 'uses' => 'HistoriPembelianController@dataPembelian']);
         });
     });
 

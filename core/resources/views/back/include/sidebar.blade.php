@@ -114,6 +114,14 @@
                                 <span class="menu-text">Pembelian Obat</span>
                             </a>
                         </li>
+                        <li class="menu-item {{ Request::is('admin/transaksi/histori_pembelian*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('histori.pembelian') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Histori Pembelian Obat</span>
+                            </a>
+                        </li>
                         
                        
                        

@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 23/02/2021 01:04:23
+ Date: 25/02/2021 11:20:47
 */
 
 SET NAMES utf8mb4;
@@ -37,6 +37,35 @@ CREATE TABLE `app_setup`  (
 -- Records of app_setup
 -- ----------------------------
 INSERT INTO `app_setup` VALUES (1, 1, 'Willy Apotek', NULL, 'willy-apotek1614016805.png', 'Jl.Kopo', '2021-02-23 01:00:05', '2021-02-22 18:00:05');
+
+-- ----------------------------
+-- Table structure for detail_pembelian_obat
+-- ----------------------------
+DROP TABLE IF EXISTS `detail_pembelian_obat`;
+CREATE TABLE `detail_pembelian_obat`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `no_faktur` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `kode_obat` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `no_batch` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `jumlah_obat` int(11) NULL DEFAULT NULL,
+  `jumlah_satuan_terkecil` int(11) NULL DEFAULT NULL,
+  `unit_id` int(20) NULL DEFAULT NULL,
+  `tgl_exp` date NULL DEFAULT NULL,
+  `harga_beli` int(11) NULL DEFAULT NULL,
+  `diskon` int(11) NULL DEFAULT NULL,
+  `margin_jual` int(11) NULL DEFAULT NULL,
+  `user_id` bigint(20) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of detail_pembelian_obat
+-- ----------------------------
+INSERT INTO `detail_pembelian_obat` VALUES (26, 'FTR128265', NULL, 'BTCH0001', 100, 2000, 1, '2021-02-16', 100000, 12, 100, 1, '2021-02-24 17:07:12', '2021-02-24 17:07:12');
+INSERT INTO `detail_pembelian_obat` VALUES (27, 'FTR128265', NULL, 'BTCH0002', 200, 4000, 1, '2021-05-08', 50000, 5, 100, 1, '2021-02-24 17:07:12', '2021-02-24 17:07:12');
+INSERT INTO `detail_pembelian_obat` VALUES (28, 'FTR128264', 'GTS87520', 'BTCH0001', 100, 2000, 1, '2021-02-16', 100000, 12, 100, 1, '2021-02-24 18:23:22', '2021-02-24 18:23:22');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -140,6 +169,33 @@ INSERT INTO `obat` VALUES (1, 'OBTR988967', 'Vitacimin', 100, 2, 1, 0, NULL, '20
 INSERT INTO `obat` VALUES (2, 'GTS87520', 'Amoxcilin', 100, 2, 2, 0, NULL, '2021-02-21 14:36:41', '2021-02-21 14:36:41');
 
 -- ----------------------------
+-- Table structure for pembelian_obat
+-- ----------------------------
+DROP TABLE IF EXISTS `pembelian_obat`;
+CREATE TABLE `pembelian_obat`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `no_faktur` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `tgl_faktur` date NULL DEFAULT NULL,
+  `suplier_id` bigint(20) NOT NULL,
+  `pajak` int(11) NOT NULL,
+  `biaya_lain` int(11) NOT NULL,
+  `jenis` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `jatuh_tempo` date NULL DEFAULT NULL,
+  `jumlah_tagihan` int(11) NULL DEFAULT NULL,
+  `status_tagihan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `user_id` int(11) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of pembelian_obat
+-- ----------------------------
+INSERT INTO `pembelian_obat` VALUES (4, 'FTR128265', '2021-02-25', 1, 0, 0, 'Kredit', '2021-02-25', 27100000, 'belum_lunas', 1, '2021-02-25 01:10:11', '2021-02-25 01:10:11');
+INSERT INTO `pembelian_obat` VALUES (5, 'FTR128264', '2021-02-23', 1, 0, 0, 'Tunai', NULL, 8800000, 'lunas', 1, '2021-02-24 18:23:22', '2021-02-24 18:23:22');
+
+-- ----------------------------
 -- Table structure for suplier
 -- ----------------------------
 DROP TABLE IF EXISTS `suplier`;
@@ -178,7 +234,7 @@ CREATE TABLE `temp_pembelian_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for unit

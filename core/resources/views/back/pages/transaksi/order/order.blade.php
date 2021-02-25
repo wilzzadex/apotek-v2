@@ -24,7 +24,8 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="" id="form_add_order">
+                    <form action="{{ route('order.store') }}" id="form_add_order" method="POST">
+                        @csrf
                     <div class="row" style="padding:10px;border: 1px solid grey">
                         <div class="col-12">
                             <div class="row">
@@ -68,12 +69,12 @@
                                                     <option value="Kredit">Kredit</option>
                                                 </select>
                                             </div>
-                                            <div class="col-6" id="jatuh_tempo" style="display:none">
+                                            <div class="col-6" id="jt" style="display:none">
                                                 <label>Jatuh Tempo</label>
                                                 <span class="text-danger">*</span></label>
                                                 <span class="text-danger">*</span></label>
                                                 <div class="input-group input-group-solid date" id="kt_datetimepicker_4" data-target-input="nearest">
-                                                    <input type="text" name="tanggal_faktur" class="form-control form-control-solid datetimepicker-input" placeholder="Pilih Tanggal" data-target="#kt_datetimepicker_3"/>
+                                                    <input type="text" required name="jatuh_tempo" id="jatuh_tempo" class="form-control form-control-solid datetimepicker-input" placeholder="Pilih Tanggal" data-target="#kt_datetimepicker_3"/>
                                                     <div class="input-group-append" data-target="#kt_datetimepicker_4" data-toggle="datetimepicker">
                                                         <span class="input-group-text">
                                                             <i class="ki ki-calendar"></i>
@@ -141,6 +142,10 @@
                                             <label>Jumlah Tagihan</label>
                                             <input type="text" readonly name="jumlah_tagihan" class="form-control-solid form-control" value="0" placeholder="No Faktur" id="jumlah_tagihan">
                                         </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-success float-right">Simpan</button> &nbsp;
+                                        <button type="button" class="btn btn-warning float-right mr-1">Cetak</button> &nbsp;
                                     </div>
                                 </div>
                             </div>
@@ -250,6 +255,8 @@
     $(document).ready(function(){
         renderTabel();
         renderLain();
+        // $('#jatuh_tempo').removeAttr('required');​​​​​
+        document.getElementById('jatuh_tempo').required = false;
     })
     
 
@@ -275,9 +282,13 @@
     $('#jenis').on('change',function(){
         let jenis = $(this).find(':selected').val();
         if(jenis == 'Kredit'){
-            $('#jatuh_tempo').css('display','');
+            $('#jt').css('display','');
+            document.getElementById('jatuh_tempo').required = true;
+            // $('#jatuh_tempo').prop('required',true);
         }else{
-            $('#jatuh_tempo').css('display','none');
+            $('#jt').css('display','none');
+            document.getElementById('jatuh_tempo').required = false;
+            // $('#jatuh_tempo').removeAttr('required');​​​​​
         }
     })
 
@@ -609,6 +620,91 @@
         });
     };
     runValidator();
+
+    var runValidatorOrder = function () {
+        var form = $('#form_add_order');
+        var errorHandler = $('.errorHandler', form);
+        var successHandler = $('.successHandler', form);
+        form.validate({
+            errorElement: "span", // contain the error msg in a span tag
+            errorClass: 'invalid-feedback',
+            errorPlacement: function ( error, element ) {
+                // Add the `invalid-feedback` class to the error element
+                error.addClass( "invalid-feedback" );
+
+                if ( element.prop( "type" ) === "checkbox" ) {
+                    error.insertAfter( element.next( "label" ) );
+                } else {
+                    error.insertAfter( element );
+                }
+            },
+            ignore: "",
+            rules: {
+               no_faktur : {
+                   required : true,
+                   minlength : 3,
+                   maxlength : 20,
+               },
+               tanggal_faktur : {
+                   required : true,
+               },
+               suplier : {
+                    required : true,
+               },
+               jenis : {
+                   required : true,
+               },
+               total_1 : {
+                   required : true,
+                //    digits : true,
+               },
+               total_2 : {
+                   required : true,
+                //    digits : true,
+               },
+               jumlah_tagihan : {
+                   required : true,
+               },
+               jml_item : {
+                   required : true,
+               }
+            },
+            messages: {
+                jml_item : {
+                    required : "Transaksi tidak bisa di simpan jika tidak ada data obat !"
+                }
+            },
+            errorElement: "em",
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                successHandler.hide();
+                errorHandler.show();
+            },
+            highlight: function ( element, errorClass, validClass ) {
+                $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+            },
+            success: function (label, element) {
+                label.addClass('help-block valid');
+                // mark the current input as valid and display OK icon
+                $(element).closest('.validate ').removeClass('has-error').addClass('has-success').find('.symbol').removeClass('required').addClass('ok');
+            },
+            submitHandler: function (form) {
+                // $('#alert').hide();
+                successHandler.show();
+                errorHandler.hide();
+                // submit form
+                if (successHandler.show()) {
+                   
+                    myBlock();
+                    form.submit();
+                }
+            }
+        });
+    };
+
+    runValidatorOrder()
 
    
 </script>

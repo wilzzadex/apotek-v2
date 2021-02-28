@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/',['as' => 'histori.pembelian', 'uses' => 'HistoriPembelianController@index']);
                 Route::get('datapembelian',['as' => 'histori.pembelian.data', 'uses' => 'HistoriPembelianController@dataPembelian']);
                 Route::get('detail',['as' => 'histori.pembelian.detail', 'uses' => 'HistoriPembelianController@detailPembelian']);
+                Route::get('print/{id}', ['as' => 'histori.pembelian.print', 'uses' => 'HistoriPembelianController@printPembelian']);Route::get('pelunasan',['as' => 'history.pembelian.pelunasan','uses' => 'HistoriPembelianController@pelunasan']);
             });
         });
 

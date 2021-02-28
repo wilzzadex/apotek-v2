@@ -158,6 +158,48 @@
         })
     }
 
+    function tandaPelunasan(obj){
+        let id = $(obj).attr('data-id');
+        // console.log(id);
+        Swal.fire({
+            title: "Anda Yakin ?",
+            text: "Pastikan Data Tagihan Telah Dilunasi",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Ya!",
+            cancelButtonText: "Tidak, Batalkan!",
+            reverseButtons: true
+        }).then(function(result) {
+            if (result.value) {
+                $.ajax({
+                    url : '{{ route("history.pembelian.pelunasan") }}',
+                    type : 'get',
+                    data : {
+                        id : id,
+                    },
+                    beforeSend: function(){
+                        KTApp.blockPage({
+                            overlayColor: '#000000',
+                            state: 'danger',
+                            message: 'Silahkan Tunggu...'
+                        });
+                    },
+                    success: function(res){
+                        KTApp.unblockPage();
+                        // console.log(res);
+                        Swal.fire(
+                            "Berhasil!",
+                            "Data tagihan berhasil di lunasi.",
+                            "success"
+                        ).then(function(){
+                            window.location.reload();
+                        })
+                    }
+                })
+            }
+        });
+    }
+
     function renderTable(bulan,tahun){
         $('#user_table').DataTable({
             processing: true,

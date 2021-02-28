@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 25/02/2021 11:20:47
+ Date: 28/02/2021 11:30:41
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `app_setup`  (
 -- ----------------------------
 -- Records of app_setup
 -- ----------------------------
-INSERT INTO `app_setup` VALUES (1, 1, 'Willy Apotek', NULL, 'willy-apotek1614016805.png', 'Jl.Kopo', '2021-02-23 01:00:05', '2021-02-22 18:00:05');
+INSERT INTO `app_setup` VALUES (1, 1, 'Google Apotek', NULL, 'google-apotek1614444380.png', 'Jl.Kopo', '2021-02-27 23:46:21', '2021-02-27 16:46:21');
 
 -- ----------------------------
 -- Table structure for detail_pembelian_obat
@@ -58,14 +58,12 @@ CREATE TABLE `detail_pembelian_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of detail_pembelian_obat
 -- ----------------------------
-INSERT INTO `detail_pembelian_obat` VALUES (26, 'FTR128265', NULL, 'BTCH0001', 100, 2000, 1, '2021-02-16', 100000, 12, 100, 1, '2021-02-24 17:07:12', '2021-02-24 17:07:12');
-INSERT INTO `detail_pembelian_obat` VALUES (27, 'FTR128265', NULL, 'BTCH0002', 200, 4000, 1, '2021-05-08', 50000, 5, 100, 1, '2021-02-24 17:07:12', '2021-02-24 17:07:12');
-INSERT INTO `detail_pembelian_obat` VALUES (28, 'FTR128264', 'GTS87520', 'BTCH0001', 100, 2000, 1, '2021-02-16', 100000, 12, 100, 1, '2021-02-24 18:23:22', '2021-02-24 18:23:22');
+INSERT INTO `detail_pembelian_obat` VALUES (51, 'FTR128265', 'OBT0001', 'BTCH0001', 100, 0, 5, '2021-03-12', 100000, 5, 100, 1, '2021-02-28 04:21:50', '2021-02-28 04:21:50');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -160,13 +158,12 @@ CREATE TABLE `obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of obat
 -- ----------------------------
-INSERT INTO `obat` VALUES (1, 'OBTR988967', 'Vitacimin', 100, 2, 1, 0, NULL, '2021-02-20 16:51:39', '2021-02-20 16:51:39');
-INSERT INTO `obat` VALUES (2, 'GTS87520', 'Amoxcilin', 100, 2, 2, 0, NULL, '2021-02-21 14:36:41', '2021-02-21 14:36:41');
+INSERT INTO `obat` VALUES (9, 'OBT0001', 'Vitacimin', 100, 1, 2, 0, NULL, '2021-02-28 04:21:10', '2021-02-28 04:21:10');
 
 -- ----------------------------
 -- Table structure for pembelian_obat
@@ -187,13 +184,36 @@ CREATE TABLE `pembelian_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pembelian_obat
 -- ----------------------------
-INSERT INTO `pembelian_obat` VALUES (4, 'FTR128265', '2021-02-25', 1, 0, 0, 'Kredit', '2021-02-25', 27100000, 'belum_lunas', 1, '2021-02-25 01:10:11', '2021-02-25 01:10:11');
-INSERT INTO `pembelian_obat` VALUES (5, 'FTR128264', '2021-02-23', 1, 0, 0, 'Tunai', NULL, 8800000, 'lunas', 1, '2021-02-24 18:23:22', '2021-02-24 18:23:22');
+INSERT INTO `pembelian_obat` VALUES (18, 'FTR128265', '2021-02-28', 1, 10, 0, 'Tunai', NULL, 10450000, 'lunas', 1, '2021-02-28 04:21:50', '2021-02-28 04:21:50');
+
+-- ----------------------------
+-- Table structure for satuan_obat
+-- ----------------------------
+DROP TABLE IF EXISTS `satuan_obat`;
+CREATE TABLE `satuan_obat`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `kode_obat` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `unit_id` bigint(20) NULL DEFAULT NULL,
+  `jumlah_satuan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `unit_id_sama_dengan` bigint(20) NULL DEFAULT NULL,
+  `stok` int(255) NULL DEFAULT NULL,
+  `harga_Jual` int(255) NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of satuan_obat
+-- ----------------------------
+INSERT INTO `satuan_obat` VALUES (13, 'OBT0001', 4, '1', 4, NULL, NULL, '2021-02-28 04:21:10', '2021-02-28 04:21:10');
+INSERT INTO `satuan_obat` VALUES (14, 'OBT0001', 5, '10', 4, NULL, NULL, '2021-02-28 04:21:10', '2021-02-28 04:21:10');
+INSERT INTO `satuan_obat` VALUES (15, 'OBT0001', 6, '50', 5, NULL, NULL, '2021-02-28 04:21:10', '2021-02-28 04:21:10');
 
 -- ----------------------------
 -- Table structure for suplier
@@ -234,7 +254,7 @@ CREATE TABLE `temp_pembelian_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for unit
@@ -243,17 +263,19 @@ DROP TABLE IF EXISTS `unit`;
 CREATE TABLE `unit`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `satuan_terkecil` int(11) NOT NULL,
+  `tingkat_satuan` int(11) NOT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of unit
 -- ----------------------------
-INSERT INTO `unit` VALUES (1, 'Box', 20, '2021-02-20 16:46:52', '2021-02-20 16:46:52');
-INSERT INTO `unit` VALUES (2, 'Pcs', 1, '2021-02-22 16:30:55', '2021-02-22 16:30:55');
+INSERT INTO `unit` VALUES (4, 'Pcs', 1, '2021-02-27 07:18:53', '2021-02-27 07:18:53');
+INSERT INTO `unit` VALUES (5, 'Strip', 2, '2021-02-27 07:19:14', '2021-02-27 07:19:14');
+INSERT INTO `unit` VALUES (6, 'Minidose', 3, '2021-02-27 07:19:24', '2021-02-27 07:19:24');
+INSERT INTO `unit` VALUES (7, 'Box', 4, '2021-02-27 07:19:31', '2021-02-27 07:19:31');
 
 -- ----------------------------
 -- Table structure for users
@@ -271,11 +293,12 @@ CREATE TABLE `users`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'Superadmin', 'superadmin', NULL, '$2y$10$J1onL.4mlpa.j0aNv6Y5jeIPNO30isHqx8/D0YTgdaXPCg34xjliK', 'admin', NULL, '2021-02-20 16:44:50', '2021-02-20 16:44:50');
+INSERT INTO `users` VALUES (1, 'Admin', 'admin', NULL, '$2y$10$IaxscuwchfpNm/kaKV3wnebnQAnvmHfd.RO2HtJYjYvL8W64tq8Gy', 'admin', NULL, '2021-02-20 16:44:50', '2021-02-27 17:19:11');
+INSERT INTO `users` VALUES (2, 'Willy', 'willy', NULL, '$2y$10$0E19YTvDZgOGNWmki3WJ6e5xLru3EjbZvW3r4DsuSTv7qzUxp85T.', 'kasir', NULL, '2021-02-27 04:29:44', '2021-02-27 04:29:44');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -70,30 +70,31 @@
                 </div>
                 <div class="card-body">
                     <!--begin: Datatable-->
-                    
-                    <table class="table table-bordered" id="user_table">
-                        <thead>
-                            <tr>
-                                <th width="10px">No.</th>
-                                <th>No Faktur</th>
-                                <th>Tanggal Faktur</th>
-                                <th>Suplier</th>
-                                <th>Jenis</th> 
-                                <th>Pajak (%)</th>
-                                <th>Jumlah Tagihan</th>
-                                <th>Keterangan</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                                {{-- <th>Total (Rp)</th>  --}}
-                                {{-- <th>Nama Barang</th>
-                                <th>Reoder Jika barang kurang dari (Rolls)</th>
-                                <th>Aksi</th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="user_table">
+                            <thead>
+                                <tr>
+                                    <th width="10px">No.</th>
+                                    <th>No Faktur</th>
+                                    <th>Tanggal Faktur</th>
+                                    <th>Suplier</th>
+                                    <th>Jenis</th> 
+                                    <th>Pajak (%)</th>
+                                    <th>Jumlah Tagihan</th>
+                                    <th>Keterangan</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                    {{-- <th>Total (Rp)</th>  --}}
+                                    {{-- <th>Nama Barang</th>
+                                    <th>Reoder Jika barang kurang dari (Rolls)</th>
+                                    <th>Aksi</th> --}}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                    </div>
                     <!--end: Datatable-->
                 </div>
             </div>
@@ -103,41 +104,59 @@
     </div>
     <!--end::Entry-->
 </div>
+
+<div class="modal fade bd-example-modal-lg" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+</div>
 @endsection
 
 @section('js-custom')
 <script src="{{ asset('assets/backend/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 <script>
-
+    @if(session("success"))
+        customAlert('Sukses','Data berhasil di simpan','success')
+    @endif
     // $(document).ready(function(){
-        let input_tanggal = $('#input_tanggal').find(':selected').val();
-        let input_tahun = $('#input_tahun').find(':selected').val();
-        let title_tanggal = $('#input_tanggal').find(':selected').html();
+    let input_tanggal = $('#input_tanggal').find(':selected').val();
+    let input_tahun = $('#input_tahun').find(':selected').val();
+    let title_tanggal = $('#input_tanggal').find(':selected').html();
+    $('#title-tabel').html(' ' + title_tanggal + ' ' + input_tahun)
+
+        renderTable(input_tanggal, input_tahun);
+
+        $('#input_tanggal').on('change', function(){
+        input_tanggal = $(this).find(':selected').val();
+        $('#user_table').dataTable().fnDestroy();
+        renderTable(input_tanggal, input_tahun);
+        title_tanggal = $('#input_tanggal').find(':selected').html();
         $('#title-tabel').html(' ' + title_tanggal + ' ' + input_tahun)
+    })
 
-         renderTable(input_tanggal, input_tahun);
+    $('#input_tahun').on('change', function(){
+        input_tahun = $(this).find(':selected').val();
+        $('#user_table').dataTable().fnDestroy();
+        renderTable(input_tanggal, input_tahun);
+        $('#title-tabel').html(' ' + title_tanggal + ' ' + input_tahun)
+    })
 
-         $('#input_tanggal').on('change', function(){
-            input_tanggal = $(this).find(':selected').val();
-            $('#user_table').dataTable().fnDestroy();
-            renderTable(input_tanggal, input_tahun);
-            title_tanggal = $('#input_tanggal').find(':selected').html();
-            $('#title-tabel').html(' ' + title_tanggal + ' ' + input_tahun)
+    function lihatDetail(obj){
+        let id = $(obj).attr('id');
+        $.ajax({
+            url : '{{ route("histori.pembelian.detail") }}',
+            type : 'get',
+            data : {
+                id : id
+            },
+            beforeSend: function(){
+                myBlock();
+            },
+            success: function(res){
+                $('#modalDetail').html(res);
+                $('#modalDetail').modal('show');
+                KTApp.unblockPage();
+            }
         })
-
-        $('#input_tahun').on('change', function(){
-            input_tahun = $(this).find(':selected').val();
-            $('#user_table').dataTable().fnDestroy();
-            renderTable(input_tanggal, input_tahun);
-            $('#title-tabel').html(' ' + title_tanggal + ' ' + input_tahun)
-        })
-    // })
-
-   
-
-    
-
-    
+    }
 
     function renderTable(bulan,tahun){
         $('#user_table').DataTable({
@@ -167,37 +186,6 @@
     }
     
 
-    // @if(session('msg'))
-    //     Swal.fire('Sukses!','{{ session("success") }}','success');
-    // @endif
-
-    // var arrows;
-    // if (KTUtil.isRTL()) {
-    // arrows = {
-    // leftArrow: '<i class="la la-angle-right"></i>',
-    // rightArrow: '<i class="la la-angle-left"></i>'
-    // }
-    // } else {
-    // arrows = {
-    // leftArrow: '<i class="la la-angle-left"></i>',
-    // rightArrow: '<i class="la la-angle-right"></i>'
-    // }
-    // }
-
-    // $('input:radio[name="jenis"]').change(
-    //         function(){
-    //             if ($(this).is(':checked') && $(this).val() == 'day') {
-    //                 $('#filter_day').css('display','');
-    //                 $('#filter_bulan').css('display','none');
-    //             } else if($(this).is(':checked') && $(this).val() == 'bulan'){
-    //                 $('#filter_day').css('display','none');
-    //                 $('#filter_bulan').css('display','');
-    //             }
-    // });
-
-    // $('#tanggal').datetimepicker({
-    //     format: 'L'
-    // });
 
    
 </script>

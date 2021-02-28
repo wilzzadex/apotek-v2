@@ -62,14 +62,14 @@ class HistoriPembelianController extends Controller
         ->addColumn('aksi', function($query){
             $status = '';
             if($query->status_tagihan == 'belum_lunas'){
-                $status = '<a class="dropdown-item" href="javascript:void(0)">Lunasi</a>';     
+                $status = '<a class="dropdown-item" href="javascript:void(0)">Tandai Terlunasi</a>';     
             }
             return '<div class="dropdown dropdown-inline mr-4">
                         <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ki ki-bold-more-hor"></i>
                         </button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:void(0)">Lihat Detail</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="lihatDetail(this)" id="'.$query->id.'">Lihat Detail</a>
                             <a class="dropdown-item" href="javascript:void(0)">Cetak</a>
                             '.$status.'
                         </div>
@@ -78,5 +78,14 @@ class HistoriPembelianController extends Controller
         ->rawColumns(['jenis','keterangan','aksi','status_tagihan'])
         ->addIndexColumn()
         ->make(true);
+    }
+
+    public function detailPembelian(Request $request)
+    {
+        $pembelian = Pembelian::find($request->id);
+        $detail = Detail_pembelian::where('no_faktur',$pembelian->no_faktur)->get();
+        $data['pembelian'] = $pembelian;
+        $data['detail'] = $detail;
+        return view('back.pages.part_of.tabel_detail_penjualan',$data);
     }
 }

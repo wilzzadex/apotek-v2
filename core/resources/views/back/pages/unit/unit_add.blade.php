@@ -35,9 +35,20 @@
                                     <input type="text" class="form-control" name="nama" placeholder="Nama Unit" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Jumlah Satuan Terkecil
+                                    <label>Tingkat Satuan
                                     <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="jumlah" placeholder="Jumlah" />
+                                    <select type="number" class="form-control" name="jumlah" placeholder="Jumlah">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
                                 </div>
                             </div>
                                 

@@ -3,6 +3,7 @@
     <div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
         <!--begin::Menu Nav-->
         <ul class="menu-nav">
+            @if (auth()->user()->role == 'admin')
             <li class="menu-item {{ Request::is('admin/dashboard*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                 <a href="{{ route('back.dashboard') }}" class="menu-link">
                     <span class="svg-icon menu-icon">
@@ -13,11 +14,6 @@
                     <span class="menu-text">Dashboard</span>
                 </a>
             </li>
-            {{-- <li class="menu-section">
-                <h4 class="menu-text">MASTER DATA</h4>
-                <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-            </li> --}}
-
             <li class="menu-item menu-item-submenu {{ Request::is('admin/unit*') ||  Request::is('admin/obat*') || Request::is('admin/user*') || Request::is('admin/suplier*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <span class="svg-icon menu-icon">
@@ -158,6 +154,33 @@
                     </ul>
                 </div>
             </li>
+            @endif
+
+            @if (auth()->user()->role == 'kasir')
+            <li class="menu-item {{ Request::is('admin/dashboard*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('back.dashboard') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+                        <i class="fas fa-tachometer-alt"></i>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('kasir*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('kasir.index') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+                        <i class="fas fa-tachometer-alt"></i>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text">Menu Kasir</span>
+                </a>
+            </li>
+            @endif
+           
+
+            
         </ul>
         <!--end::Menu Nav-->
     </div>

@@ -16,4 +16,17 @@ class Obat extends Model
         'harga_jual',
         'keterangan',
     ];
+
+    public function kategori()
+    {
+        return $this->hasOne(Kategori::class, 'id','kategori_id');
+    }
+    public function golongan()
+    {
+        return $this->hasOne(Golongan::class, 'id','golongan_id');
+    }
+    public function details(){
+    	return $this->hasMany(Detail_pembelian::class,'kode_obat','kode_obat');
+    }
+    
 }

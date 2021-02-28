@@ -24,41 +24,27 @@
                 </div>
                 <div class="card-body">
                     <!--begin: Datatable-->
+                    <div class="table-responsive">
+
                     
-                    <table class="table table-bordered" id="user_table">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Nama</th>
-                                <th>Alamat</th>
-                                <th>Penanggung Jawab</th>
-                                <th>No Telpon</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{-- @foreach ($suplier as $key => $item)
+                        <table class="table table-bordered" id="obat_table">
+                            <thead>
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>{{ $item->nama_suplier }}</td>
-                                    <td>{{ $item->alamat }}</td>
-                                    <td>{{ $item->penanggung_jawab }}</td>
-                                    <td>{{ $item->no_telp }}</td>
-                                    <td nowrap="nowrap">
-                                        <div class="dropdown dropdown-inline mr-4">
-                                            <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="ki ki-bold-more-hor"></i>
-                                            </button>
-                                            <div class="dropdown-menu" style="">
-                                                <a class="dropdown-item" href="{{ route('suplier.edit',$item->id) }}">Edit</a>
-                                                <a class="dropdown-item" href="javascript:void(0)" onclick="deleteSuplier(this)" data-id="{{ $item->id }}">Hapus</a>
-                                            </div>
-                                        </div>
-                                    </td>
+                                    <th>No.</th>
+                                    <th>Obat</th>
+                                    <th>Kategori</th>
+                                    <th>Golongan</th>
+                                    <th>No Batch - Exp</th>
+                                    <th>Harga Jual</th>
+                                    <th>Stok</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            @endforeach --}}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            
+                            </tbody>
+                        </table>
+                    </div>
                     <!--end: Datatable-->
                 </div>
             </div>
@@ -79,6 +65,25 @@
     @if(session('success'))
         customAlert('Sukses !','{{ session("success") }}','success')
     @endif
+
+    $('#obat_table').DataTable({
+        processing: true,
+        serverSide: true,
+        // ajax : "{{ route('obat.data') }}",
+        "ajax": {
+            url : "{{ route('obat.data') }}",
+            type : 'get',
+        },
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'nama_obat', name: 'nama_obat'},
+            {data: 'kategori_id', name: 'kategori_id'},
+            {data: 'golongan_id', name: 'golongan_id'},
+            {data: 'no_batch', name: 'no_batch'},
+            {data: 'stok', name: 'stok'},
+           
+        ]
+    })
 
     function deleteSuplier(obj){
         let id = $(obj).attr('data-id');

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Temp_Pembelian_Obat;
 use App\Models\Pembelian;
 use App\Models\Detail_pembelian;
+use App\Models\Satuan_Obat;
 use Validator;
 use View;
 use DB;
@@ -26,7 +27,7 @@ class OrderController extends Controller
     {
         $diskon = 0;
         $margin_jual = 0;
-        $user_id = '1';
+        $user_id = auth()->user()->id;
         $harga_beli = str_replace('.','',$request->harga_beli);
         if($request->margin_jual){
             $margin_jual = $request->margin_jual;
@@ -63,14 +64,14 @@ class OrderController extends Controller
 
     public function renderTabel()
     {
-        $user_id = 1;
+        $user_id = auth()->user()->id;
         $data['temp'] = Temp_Pembelian_Obat::where('user_id',$user_id)->get();
         return view('back.pages.part_of.tabel_pembelian_obat',$data);
     }
 
     public function renderLain()
     {
-        $user_id = 1;
+        $user_id = auth()->user()->id;
         $temp = Temp_Pembelian_Obat::where('user_id',$user_id)->get();
         $total_1 = 0;
         $total_2 = 0;
@@ -80,9 +81,9 @@ class OrderController extends Controller
             $diskon = ($item->diskon / 100) * $subtotal;
             $total_1 += $subtotal;
             $pot_pen += $diskon;
-            $total_2 += ($total_1 - $pot_pen);
         }
-
+        
+        $total_2 += ($total_1 - $pot_pen);
         $data['total_1'] = $total_1;
         $data['total_2'] = $total_2;
         $data['pot_pen'] = $pot_pen;
@@ -97,11 +98,12 @@ class OrderController extends Controller
 
     public function editObat(Request $request)
     {
-        $temp = Temp_Pembelian_Obat::find($request->id)->first();
+        $temp = Temp_Pembelian_Obat::where('id',$request->id)->first();
+        // dd($temp->id);
         $data['temp'] = $temp;
         $data['obat'] = Obat::orderBy('nama_obat','ASC')->get();
         $data['suplier'] = Suplier::orderBy('nama_suplier','ASC')->get();
-        $data['unit'] = Unit::orderBy('nama','ASC')->get();
+        $data['unit'] = Satuan_Obat::where('kode_obat',$temp->obat->kode_obat)->get();
         return view('back.pages.part_of.modal_edit_obat',$data);
     }
 
@@ -109,7 +111,7 @@ class OrderController extends Controller
     {
         $diskon = 0;
         $margin_jual = 0;
-        $user_id = '1';
+        $user_id = auth()->user()->id;
         $harga_beli = str_replace('.','',$request->harga_beli);
         if($request->margin_jual){
             $margin_jual = $request->margin_jual;
@@ -146,7 +148,7 @@ class OrderController extends Controller
     {
         // dd(date('Y-m-d',strtotime($request->tanggal_faktur)));
 
-        $user_id = 1;
+        $user_id = auth()->user()->id;
         $pembelian = new Pembelian();
         $pembelian->no_faktur = $request->no_faktur;
         $pembelian->tgl_faktur = date('Y-m-d',strtotime($request->tanggal_faktur));
@@ -179,6 +181,15 @@ class OrderController extends Controller
             $detail->save();
         }
 
-        $temp->delete();
+        $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
+
+        return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
+    }
+
+    public function getObatUnit(Request $request)
+    {
+        $satuan = Satuan_Obat::where('kode_obat',$request->id)->get();
+        $data['satuan'] = $satuan;
+        return view('back.pages.part_of.select_satuan_obat',$data);
     }
 }

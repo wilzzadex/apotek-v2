@@ -22,7 +22,7 @@ class UnitController extends Controller
     {
         $unit = new Unit();
         $unit->nama = $request->nama;
-        $unit->satuan_terkecil = $request->jumlah;
+        $unit->tingkat_satuan = $request->jumlah;
         $unit->save();
 
         return redirect(route('unit'))->with('success','Data Berhasil di simpan !');

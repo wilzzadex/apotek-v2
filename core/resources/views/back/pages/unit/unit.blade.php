@@ -39,7 +39,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $item->nama }}</td>
-                                    <td>{{ $item->satuan_terkecil }}</td>
+                                    <td>{{ $item->tingkat_satuan }}</td>
                                     <td nowrap="nowrap">
                                         <div class="dropdown dropdown-inline mr-4">
                                             <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

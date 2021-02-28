@@ -15,7 +15,7 @@
                                 <input type="hidden" name="id" value="{{ $temp->id }}">
                                 <label>Nama Obat</label>
                                 <span class="text-danger">*</span></label>
-                                <select name="obat_id" style="width: 100%" class="form-control" id="obat_id_edit">
+                                <select name="obat_id" onchange="obat_change(this)" style="width: 100%" class="form-control" id="obat_id_edit">
                                     <option value="">- Pilih Obat -</option>
                                     @foreach ($obat as $item)
                                         <option value="{{ $item->kode_obat }}" {{ $item->kode_obat == $temp->kode_obat ? 'selected' : '' }}>{{ $item->kode_obat }}-{{ $item->nama_obat }}</option>
@@ -35,10 +35,10 @@
                             <div class="col-4 mt-2">
                                 <label>Unit</label>
                                 <span class="text-danger">*</span></label>
-                                <select name="unit_id" style="width: 100%" class="form-control" id="unit_id_edit">
+                                <select  name="unit_id" style="width: 100%" class="form-control" id="unit_id_edit">
                                     <option value="">- Pilih Satuan -</option>
                                     @foreach ($unit as $item)
-                                        <option value="{{ $item->id }}" {{ $item->id == $temp->unit_id  ? 'selected' : ''}}>{{ $item->nama }}</option>
+                                        <option value="{{ $item->unit->id }}" {{ $item->unit->id == $temp->unit_id  ? 'selected' : ''}}>{{ $item->unit->nama }}</option>
                                     @endforeach
                                 </select>
                             </div>

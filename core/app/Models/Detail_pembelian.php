@@ -20,4 +20,17 @@ class Detail_pembelian extends Model
         'margin_jual',
         'user_id',
     ];
+
+    public function obat()
+    {
+        return $this->hasOne(Obat::class, 'kode_obat','kode_obat');
+    }
+
+    public function unit()
+    {
+        return $this->hasOne(Unit::class, 'id','unit_id');
+    }
+    // public function obats(){
+    // 	return $this->belongsTo(Obat::class,'kode_obat','kode_obat');
+    // }
 }

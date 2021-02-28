@@ -49,28 +49,54 @@ var KTLogin = function() {
 			}
 		);
 
+		
+
         $('#kt_login_signin_submit').on('click', function (e) {
             e.preventDefault();
-
+			let data_url = $(this).attr('data-url');
+			let admin_url = $(this).attr('data-admin');
             validation.validate().then(function(status) {
 		        if (status == 'Valid') {
-                    swal.fire({
-		                text: "All is cool! Now you submit this form",
-		                icon: "success",
-		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
-                        customClass: {
-    						confirmButton: "btn font-weight-bold btn-light-primary"
-    					}
-		            }).then(function() {
-						KTUtil.scrollTop();
-					});
+                    $.ajax({
+						url  : data_url,
+						type : 'post',
+						data :  $('#kt_login_signin_form').serialize(),
+						beforeSend : function(){
+							// myBlock();
+						},
+						success: function(res){
+							KTApp.unblockPage();
+							if(res == 'ok'){
+								swal.fire({
+									text: "Berhasil login",
+									icon: "success",
+									title : 'Sukses'
+								}).then(function() {
+									window.location.href = admin_url
+								});
+							}else{
+								swal.fire({
+									text: "Maaf, Username atau Password Salah.",
+									icon: "error",
+									buttonsStyling: false,
+									confirmButtonText: "Coba lagi!",
+									customClass: {
+										confirmButton: "btn font-weight-bold btn-light-primary"
+									}
+								}).then(function() {
+									KTUtil.scrollTop();
+								});
+							}
+							
+							// console.log(admin_url)
+						}
+					})
 				} else {
 					swal.fire({
-		                text: "Sorry, looks like there are some errors detected, please try again.",
+		                text: "Maaf, Username atau Password harus diisi.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
+		                confirmButtonText: "Coba lagi!",
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
@@ -160,23 +186,23 @@ var KTLogin = function() {
 
             validation.validate().then(function(status) {
 		        if (status == 'Valid') {
-                    swal.fire({
-		                text: "All is cool! Now you submit this form",
-		                icon: "success",
-		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
-                        customClass: {
-    						confirmButton: "btn font-weight-bold btn-light-primary"
-    					}
-		            }).then(function() {
-						KTUtil.scrollTop();
-					});
+                    // swal.fire({
+		            //     text: "All is cool! Now you submit this form",
+		            //     icon: "success",
+		            //     buttonsStyling: false,
+		            //     confirmButtonText: "Ok, got it!",
+                    //     customClass: {
+    				// 		confirmButton: "btn font-weight-bold btn-light-primary"
+    				// 	}
+		            // }).then(function() {
+					// 	KTUtil.scrollTop();
+					// });
 				} else {
 					swal.fire({
-		                text: "Sorry, looks like there are some errors detected, please try again.",
+		                text: "Maaf, Username atau Password harus diisi.",
 		                icon: "error",
 		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
+		                confirmButtonText: "Coba lagi!",
                         customClass: {
     						confirmButton: "btn font-weight-bold btn-light-primary"
     					}
@@ -222,28 +248,7 @@ var KTLogin = function() {
 		);
 
         // Handle submit button
-        $('#kt_login_forgot_submit').on('click', function (e) {
-            e.preventDefault();
-
-            validation.validate().then(function(status) {
-		        if (status == 'Valid') {
-                    // Submit form
-                    KTUtil.scrollTop();
-				} else {
-					swal.fire({
-		                text: "Sorry, looks like there are some errors detected, please try again.",
-		                icon: "error",
-		                buttonsStyling: false,
-		                confirmButtonText: "Ok, got it!",
-                        customClass: {
-    						confirmButton: "btn font-weight-bold btn-light-primary"
-    					}
-		            }).then(function() {
-						KTUtil.scrollTop();
-					});
-				}
-		    });
-        });
+       
 
         // Handle cancel button
         $('#kt_login_forgot_cancel').on('click', function (e) {

@@ -92,19 +92,19 @@ class ObatController extends Controller
             }
             return $batch;
         })
-        ->addColumn('hraga_jual', function($query){
+        ->addColumn('harga_jual', function($query){
             $harga_jual = '';
-            $pembelian = Detail_pembelian::where('kode_Obat',$query->kode_obat)->get();
+            $pembelian = Satuan_Obat::where('kode_Obat',$query->kode_obat)->get();
             foreach($pembelian as $key => $item){
-                $harga_jual .= '<br>';
+                $harga_jual .= 'Harga Jual Per ' . $item->unit->nama  . ' : ' . number_format($item->harga_Jual,0,',','.') . '<br>';
             }
             return $harga_jual;
         })
         ->addColumn('stok', function($query){
             $stoks = '';
-            $pembelian = Detail_pembelian::selectRaw('SUM(jumlah_obat) as jml_obat,unit_id')->with('unit')->where('kode_Obat',$query->kode_obat)->groupBy('unit_id')->get();
+            $pembelian = Satuan_Obat::where('kode_Obat',$query->kode_obat)->get();
             foreach($pembelian as $item){
-                $stoks .= $item->jml_obat . ' ' . $item->unit->nama . '<br>';
+                $stoks .= $item->stok . ' ' . $item->unit->nama . '<br>';
             }
             return $stoks;
         })
@@ -119,7 +119,7 @@ class ObatController extends Controller
                         </div>
                     </div>';
         })
-        ->rawColumns(['aksi','no_batch','stok'])
+        ->rawColumns(['aksi','no_batch','stok','harga_jual'])
         ->addIndexColumn()
         ->make(true);
     }

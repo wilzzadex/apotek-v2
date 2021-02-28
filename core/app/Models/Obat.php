@@ -28,5 +28,8 @@ class Obat extends Model
     public function details(){
     	return $this->hasMany(Detail_pembelian::class,'kode_obat','kode_obat');
     }
+    public function satuans(){
+    	return $this->hasMany(Satuan_Obat::class,'kode_obat','kode_obat');
+    }
     
 }

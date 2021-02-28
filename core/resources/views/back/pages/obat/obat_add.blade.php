@@ -82,7 +82,7 @@
                                                         @endforeach
                                                     </select>
                                                     <input type="hidden" name="jumlah[]" value="1">
-                                                    <input type="text" name="sama_dengan[]" value="" id="sama_dengan">
+                                                    <input type="hidden" name="sama_dengan[]" value="" id="sama_dengan">
                                                 </div>
                                             </div>
                                         </div>
@@ -175,7 +175,7 @@
                                         <div class="col-5">
                                             <label>`+res.satuan_next.nama+`</label>
                                             <input type="number" min="1" value="0" name="jumlah[]" required class="form-control" placeholder="Masukan Jumlah" aria-describedby="basic-addon2"/>
-                                            <input type="text" name="sama_dengan[]" value="`+res.satuan_next.id+`">
+                                            <input type="hidden" name="sama_dengan[]" value="`+res.satuan_next.id+`">
                                         </div>
                                         
                                     </div>

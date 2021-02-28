@@ -86,5 +86,10 @@ Route::group(['middleware' => 'auth'], function(){
 
     Route::prefix('kasir')->group(function(){
         Route::get('/',['as' => 'kasir.index','uses' => 'KasirController@index']);
+        Route::get('show',['as' => 'kasir.show.obat','uses' => 'KasirController@showObat']);
+        Route::get('addtolist',['as' => 'kasir.add.tolist','uses' => 'KasirController@addtolist']);
+        Route::get('getlist',['as' => 'kasir.get.list','uses' => 'KasirController@getList']);
+        Route::get('changepcs',['as' => 'kasir.change.pcs','uses' => 'KasirController@changePcs']);
+        Route::post('changepcs',['as' => 'change.pcs','uses' => 'KasirController@changePcsPost']);
     });
 });

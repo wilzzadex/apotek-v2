@@ -139,27 +139,16 @@
                             <br>
                             <div class="row">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Ketik Nama / Kode Obat..."/>
+                                    <input type="text" class="form-control" id="keyword" placeholder="Ketik Nama / Kode Obat..."/>
                                     <div class="input-group-append">
-                                     <button class="btn btn-primary" type="button">Cari Obat</button>
+                                     <button class="btn btn-primary" id="btn-cari" type="button">Cari Obat</button>
                                     </div>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
-                                <div class="col-12">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
-                                        </tr>
-                                    </table>
+                                <div class="col-12" id="tableShowObat">
+                                    
                                 </div>
                             </div>
                         </div>
@@ -175,21 +164,13 @@
                                             <th>Nama Obat</th>
                                             <th>Jumlah</th>
                                             <th>Satuan</th>
-                                            {{-- <th>Pilihan Harga</th> --}}
                                             <th>Harga</th>
                                             <th>Nominal Diskon</th>
                                             <th>Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                       <tr>
-                                           <td>OBT0001 - Amoxcilin</td>
-                                           <td style="cursor: pointer" onclick="changePcs(1)">1</td>
-                                           <td style="cursor: pointer">Pcs</td>
-                                           <td style="cursor: pointer">Rp 10.000</td>
-                                           <td style="cursor: pointer">Rp 1.000</td>
-                                           <td><b> Rp 9.000 </b></td>
-                                       </tr>
+                                    <tbody id="tableListObat">
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -209,7 +190,7 @@
                                             <th class="font-weight-bold text-muted text-uppercase">Total Bayar</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
                                         <tr class="font-weight-bolder">
                                             <td>BARCLAYS UK</td>
                                             <td>12345678909</td>
@@ -241,12 +222,84 @@
     </div>
     <!--end::Entry-->
 </div>
+
+<div class="modal fade" id="modalPcs" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeSm" aria-hidden="true">
+    
+</div>
 @endsection
 
 @section('js-custom')
 <script>
-    function changePcs(id){
-        alert(id)
+    getListObat();
+
+    function changePcs(thiss){
+        let id = $(thiss).attr('id');
+        $.ajax({
+            url : '{{ route("kasir.change.pcs") }}',
+            type : 'get',
+            data : {
+                id : id,
+            },
+            success: function(res){
+                // $('#tableShowObat').html(res);
+                $('#modalPcs').html(res);
+                $('#modalPcs').modal('show');
+            }
+        })
+    }
+
+    $('#btn-cari').on('click', function(){
+        $('#tableShowObat').html('');
+        let keyword = $('#keyword').val();
+        getObat(keyword);
+    })
+
+    document.querySelector('#keyword').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            $('#tableShowObat').html('');
+            let keyword = $('#keyword').val();
+            getObat(keyword);
+        }
+    });
+
+    function getListObat() {
+        $.ajax({
+            url : '{{ route("kasir.get.list") }}',
+            type : 'get',
+            success: function(res){
+                $('#tableListObat').html(res);
+            }
+        })
+    }
+
+    function getObat(keyword){
+        $.ajax({
+            url : '{{ route("kasir.show.obat") }}',
+            type : 'get',
+            data : {
+                keyword : keyword,
+            },
+            success: function(res){
+                $('#tableShowObat').html(res);
+            }
+        })
+    }
+
+    function addToList(thiss){
+        let id = $(thiss).attr('id');
+        $.ajax({
+            url : '{{ route("kasir.add.tolist") }}',
+            data : {
+                id : id,
+            },
+            success : function(res){
+                if(res == 'ada'){
+                    customAlert('','Obat sudah ada di list','warning');
+                }else{
+                    getListObat();
+                }
+            }
+        })
     }
 </script>
 @endsection

@@ -168,7 +168,7 @@ class OrderController extends Controller
         foreach($temp->get() as $temp){
             $detail = new Detail_pembelian();
             $detail->no_faktur = $pembelian->no_faktur;
-            $detail->no_batch = $temp->no_batch;
+            $detail->no_batch = strtoupper($temp->no_batch);
             $detail->kode_obat = $temp->kode_obat;
             $detail->jumlah_obat = $temp->jumlah_obat;
             $detail->jumlah_satuan_terkecil = $temp->jumlah_satuan_terkecil;
@@ -179,6 +179,11 @@ class OrderController extends Controller
             $detail->margin_jual = $temp->margin_jual;
             $detail->user_id = $temp->user_id;
             $detail->save();
+
+            $update_stok = Satuan_Obat::where('kode_obat',$detail->kode_obat)->where('unit_id',$detail->unit_id)->first();
+            $update_stok->harga_jual = $temp->harga_beli + (($temp->margin_jual / 100) * $temp->harga_beli);
+            $update_stok->stok = ($update_stok->stok + $temp->jumlah_obat);
+            $update_stok->save();
         }
 
         $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();

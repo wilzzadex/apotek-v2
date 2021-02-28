@@ -80,7 +80,9 @@
             {data: 'kategori_id', name: 'kategori_id'},
             {data: 'golongan_id', name: 'golongan_id'},
             {data: 'no_batch', name: 'no_batch'},
+            {data: 'harga_jual', name: 'harga_jual'},
             {data: 'stok', name: 'stok'},
+            {data: 'aksi', name: 'aksi'},
            
         ]
     })

@@ -119,7 +119,7 @@
                             </a>
                         </li>
                         <li class="menu-item {{ Request::is('admin/transaksi/histori_penjualan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                            <a href="{{ route('histori.pembelian') }}" class="menu-link">
+                            <a href="{{ route('histori.penjualan') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
@@ -132,7 +132,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="menu-item menu-item-submenu {{ Request::is('admin/transaksi*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
+            <li class="menu-item menu-item-submenu {{ Request::is('admin/laporan*') ? 'menu-item-open' : '' }}" aria-haspopup="true" data-menu-toggle="hover">
                 <a href="javascript:;" class="menu-link menu-toggle">
                     <span class="svg-icon menu-icon">
                         <span class="svg-icon menu-icon">
@@ -148,22 +148,22 @@
                 <div class="menu-submenu" kt-hidden-height="80" style="">
                     <i class="menu-arrow"></i>
                     <ul class="menu-subnav">
-                        <li class="menu-item {{ Request::is('admin/transaksi/histori_pembelian*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                            <a href="{{ route('histori.pembelian') }}" class="menu-link">
+                        <li class="menu-item {{ Request::is('admin/laporan/penjualan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('laporan.penjualan') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
-                                <span class="menu-text">Penjualan Obat</span>
+                                <span class="menu-text">Laba Rugi</span>
                             </a>
                         </li>
-                        <li class="menu-item {{ Request::is('admin/transaksi/histori_penjualan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        {{-- <li class="menu-item {{ Request::is('admin/transaksi/histori_penjualan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                             <a href="{{ route('histori.pembelian') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>
                                 <span class="menu-text">Pembelian Obat</span>
                             </a>
-                        </li>
+                        </li> --}}
                         
                        
                        
@@ -217,12 +217,33 @@
                 <a href="{{ route('kasir.index') }}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
-                        <i class="fas fa-tachometer-alt"></i>
+                        <i class="fas fa-cash-register"></i>
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-text">Menu Kasir</span>
                 </a>
             </li>
+            <li class="menu-item {{ Request::is('admin/obat*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('obat') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                    <i class="fas fa-boxes">
+                       
+                    </i>
+                    </span>
+                    <span class="menu-text">Lihat Stok Obat</span>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('admin/transaksi/histori_penjualan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('histori.penjualan') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+                        <i class="fas fa-money-bill-alt"></i>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text">Histori Penjualan</span>
+                </a>
+            </li>
+            
             @endif
            
 

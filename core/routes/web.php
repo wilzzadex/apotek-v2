@@ -73,7 +73,22 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('/',['as' => 'histori.pembelian', 'uses' => 'HistoriPembelianController@index']);
                 Route::get('datapembelian',['as' => 'histori.pembelian.data', 'uses' => 'HistoriPembelianController@dataPembelian']);
                 Route::get('detail',['as' => 'histori.pembelian.detail', 'uses' => 'HistoriPembelianController@detailPembelian']);
-                Route::get('print/{id}', ['as' => 'histori.pembelian.print', 'uses' => 'HistoriPembelianController@printPembelian']);Route::get('pelunasan',['as' => 'history.pembelian.pelunasan','uses' => 'HistoriPembelianController@pelunasan']);
+                Route::get('print/{id}', ['as' => 'histori.pembelian.print', 'uses' => 'HistoriPembelianController@printPembelian']);
+                Route::get('pelunasan',['as' => 'history.pembelian.pelunasan','uses' => 'HistoriPembelianController@pelunasan']);
+            });
+
+            Route::prefix('histori_penjualan')->group(function(){
+                Route::get('/',['as' => 'histori.penjualan', 'uses' => 'HistoriPenjualanController@index']);
+                Route::get('datapenjualan',['as' => 'histori.penjualan.data', 'uses' => 'HistoriPenjualanController@datapenjualan']);
+                // Route::get('detail',['as' => 'histori.penjualan.detail', 'uses' => 'HistoripenjualanController@detailpenjualan']);
+                Route::get('print/{id}', ['as' => 'histori.penjualan.print', 'uses' => 'HistoriPenjualanController@struk']);
+            });
+        });
+
+        Route::prefix('laporan')->group(function(){
+            Route::prefix('penjualan')->group(function(){
+                Route::get('/',['as' => 'laporan.penjualan', 'uses' => 'LaporanController@indexPenjualan']);
+                Route::post('cetak',['as' => 'laporan.penjualan.cetak', 'uses' => 'LaporanController@cetakPenjualan']);
             });
         });
 
@@ -92,5 +107,10 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('getlist',['as' => 'kasir.get.list','uses' => 'KasirController@getList']);
         Route::get('changepcs',['as' => 'kasir.change.pcs','uses' => 'KasirController@changePcs']);
         Route::post('changepcs',['as' => 'change.pcs','uses' => 'KasirController@changePcsPost']);
+        Route::get('changediskon',['as' => 'kasir.change.diskon','uses' => 'KasirController@changeDiskon']);
+        Route::post('changediskon',['as' => 'change.diskon','uses' => 'KasirController@changeDiskonPost']);
+        Route::get('gettotal',['as' => 'kasir.get.total','uses' => 'KasirController@getTotal']);
+        Route::post('store',['as' => 'store.penjualan','uses' => 'KasirController@store']);
+        Route::get('listdes',['as' => 'list.destroy','uses' => 'KasirController@listDestroy']);
     });
 });

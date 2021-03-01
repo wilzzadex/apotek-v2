@@ -6,8 +6,8 @@
                 <div class="form-group row mt-5">
                     <div class="col-6">
                         <label>Masukan Jumlah Obat</label>
-                        <input type="number" name="jumlah_obat" required min="0" class="form-control">
-                        <input type="hidden" value="{{ $temp->id }}">
+                        <input type="number" value="{{ $temp->jumlah_obat }}" name="jumlah_obat" required min="0" class="form-control">
+                        <input type="hidden" name="id" value="{{ $temp->id }}">
                     </div>
                     <div class="col-6">
                         <label>Pilih Satuan Obat</label>

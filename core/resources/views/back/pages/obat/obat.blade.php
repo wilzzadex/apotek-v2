@@ -15,10 +15,13 @@
 
                    </div>
                     <div class="card-toolbar">
+                        @if (auth()->user()->role == 'admin')
                         <a href="{{ route('obat.add') }}" class="btn btn-primary font-weight-bolder">
-                        <span class="svg-icon svg-icon-md">
-                           <i class="fas fa-plus"></i>
-                        </span>Tambah Obat</a>
+                            <span class="svg-icon svg-icon-md">
+                               <i class="fas fa-plus"></i>
+                            </span>Tambah Obat</a>
+                        @endif
+                       
                         <!--end::Button-->
                     </div>
                 </div>

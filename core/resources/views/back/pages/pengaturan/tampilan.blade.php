@@ -66,6 +66,18 @@
                             <label>Nama / Judul Aplikasi</label>
                             <input type="text" name="nama_aplikasi" value="{{ $pengaturan->nama_aplikasi }}" placeholder="Nama Aplikasi ..." required class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label>Alamat Apotek</label>
+                            <input type="text" name="alamat" value="Margahayu, Kab Bandung" placeholder="Nama Aplikasi ..." required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Telp</label>
+                            <input type="text" name="tepl" value="087773726667" placeholder="Nama Aplikasi ..." required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" name="email" value="willy@gmail.com" placeholder="Nama Aplikasi ..." required class="form-control">
+                        </div>
                         <button type="submit" class="btn btn-primary float-right"> Simpan Perubahan </button>
                     </form>
                 </div>

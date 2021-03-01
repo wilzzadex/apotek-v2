@@ -56,7 +56,7 @@
             <div class="card card-custom gutter-b">
                 <div class="card-header flex-wrap py-3">
                    <div class="card-title">
-                        Histori Pembelian Obat Bulan &nbsp; <span id="title-tabel"></span>
+                        Histori Penjualan Obat &nbsp; <span id="title-tabel"></span>
                        
                    </div>
                    
@@ -75,19 +75,11 @@
                             <thead>
                                 <tr>
                                     <th width="10px">No.</th>
-                                    <th>No Faktur</th>
-                                    <th>Tanggal Faktur</th>
-                                    <th>Suplier</th>
-                                    <th>Jenis</th> 
-                                    <th>Pajak (%)</th>
-                                    <th>Jumlah Tagihan</th>
-                                    <th>Keterangan</th>
-                                    <th>Status</th>
+                                    <th>No Transaksi</th>
+                                    <th>Tanggal Transaksi</th>
+                                    <th>Pelanggan</th>
+                                    <th>Subtotal</th> 
                                     <th>Aksi</th>
-                                    {{-- <th>Total (Rp)</th>  --}}
-                                    {{-- <th>Nama Barang</th>
-                                    <th>Reoder Jika barang kurang dari (Rolls)</th>
-                                    <th>Aksi</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -158,54 +150,14 @@
         })
     }
 
-    function tandaPelunasan(obj){
-        let id = $(obj).attr('data-id');
-        // console.log(id);
-        Swal.fire({
-            title: "Anda Yakin ?",
-            text: "Pastikan Data Tagihan Telah Dilunasi",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "Ya!",
-            cancelButtonText: "Tidak, Batalkan!",
-            reverseButtons: true
-        }).then(function(result) {
-            if (result.value) {
-                $.ajax({
-                    url : '{{ route("history.pembelian.pelunasan") }}',
-                    type : 'get',
-                    data : {
-                        id : id,
-                    },
-                    beforeSend: function(){
-                        KTApp.blockPage({
-                            overlayColor: '#000000',
-                            state: 'danger',
-                            message: 'Silahkan Tunggu...'
-                        });
-                    },
-                    success: function(res){
-                        KTApp.unblockPage();
-                        // console.log(res);
-                        Swal.fire(
-                            "Berhasil!",
-                            "Data tagihan berhasil di lunasi.",
-                            "success"
-                        ).then(function(){
-                            window.location.reload();
-                        })
-                    }
-                })
-            }
-        });
-    }
+    
 
     function renderTable(bulan,tahun){
         $('#user_table').DataTable({
             processing: true,
             serverSide: true,
             "ajax": {
-                url : "{{ route('histori.pembelian.data') }}",
+                url : "{{ route('histori.penjualan.data') }}",
                 type : 'get',
                 data : {
                     tahun : input_tahun,
@@ -214,15 +166,12 @@
             },
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'no_faktur', name: 'no_faktur'},
-                {data: 'tgl_faktur', name: 'tgl_faktur'},
-                {data: 'suplier_id', name: 'suplier_id'},
-                {data: 'jenis', name: 'jenis'},
-                {data: 'pajak', name: 'pajak'},
-                {data: 'jumlah_tagihan', name: 'jumlah_tagihan'},
-                {data: 'keterangan', name: 'keterangan'},
-                {data: 'status_tagihan', name: 'status_tagihan'},
+                {data: 'no_transaksi', name: 'no_transaksi'},
+                {data: 'tgl_transaksi', name: 'tgl_transaksi'},
+                {data: 'pelanggan_id', name: 'pelanggan_id'},
+                {data: 'jumlah_bayar', name: 'jumlah_bayar'},
                 {data: 'aksi', name: 'aksi'},
+                
             ]
         })
     }

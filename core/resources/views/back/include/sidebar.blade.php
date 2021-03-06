@@ -148,7 +148,23 @@
                 <div class="menu-submenu" kt-hidden-height="80" style="">
                     <i class="menu-arrow"></i>
                     <ul class="menu-subnav">
-                        <li class="menu-item {{ Request::is('admin/laporan/penjualan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        <li class="menu-item {{ Request::is('admin/laporan/penjualan/index*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('laporan.penjualan.index2') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Laporan Penjualan</span>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ Request::is('admin/laporan/pembelian*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                            <a href="{{ route('laporan.penjualan') }}" class="menu-link">
+                                <i class="menu-bullet menu-bullet-dot">
+                                    <span></span>
+                                </i>
+                                <span class="menu-text">Laporan Pembelian</span>
+                            </a>
+                        </li>
+                        <li class="menu-item {{ Request::is('admin/laporan/penjualan') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                             <a href="{{ route('laporan.penjualan') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
@@ -241,6 +257,16 @@
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-text">Histori Penjualan</span>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('admin/laporan*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                <a href="{{ route('laporan.penjualan.index2') }}" class="menu-link">
+                    <span class="svg-icon menu-icon">
+                        <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
+                        <i class="fas fa-money-bill-alt"></i>
+                        <!--end::Svg Icon-->
+                    </span>
+                    <span class="menu-text">Laporan Penjualan</span>
                 </a>
             </li>
             

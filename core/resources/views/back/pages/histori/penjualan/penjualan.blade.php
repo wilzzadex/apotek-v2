@@ -134,7 +134,7 @@
     function lihatDetail(obj){
         let id = $(obj).attr('id');
         $.ajax({
-            url : '{{ route("histori.pembelian.detail") }}',
+            url : '{{ route("histori.penjualan.detail") }}',
             type : 'get',
             data : {
                 id : id

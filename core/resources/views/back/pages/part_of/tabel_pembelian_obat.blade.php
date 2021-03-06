@@ -1,5 +1,6 @@
 <input type="hidden" name="jml_item" value="{{ count($temp) > 0 ? count($temp) : '' }}">
 <div class="table-responsive">
+    
 <table class="table table-bordered">
     <tr>
         <th style="max-width: 40px;min-width:40px">No</th>

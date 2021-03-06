@@ -15,9 +15,17 @@ class HistoriPenjualanController extends Controller
 
     public function datapenjualan(Request $request)
     {
+        $user_id = auth()->user()->id;
         $filter1 = $request->tahun . '-' . $request->bulan;
         // dd($filter1);
-        $query = Penjualan_Obat::where('created_at', 'like', '%' . $filter1 . '%')->orderBy('id','DESC')->get();
+        $penjualan = Penjualan_Obat::where('created_at', 'like', '%' . $filter1 . '%')->orderBy('id','DESC');
+        if(auth()->user()->role != 'admin'){
+            $query = $penjualan->where('user_id',$user_id);
+        }else{
+            
+        }
+
+        $query = $penjualan->get();
         return Datatables::of($query)
             ->editColumn('tgl_transaksi', function ($query) {
                 return date('d M Y', strtotime($query->tgl_transaksi));
@@ -51,5 +59,15 @@ class HistoriPenjualanController extends Controller
         $data['penjualan'] = $penjualan;
         $data['detail_penjualan'] = $detail_penjualan;
         return view('back.pages.laporan.struk',$data);
+    }
+
+    public function detailpenjualan(Request $request)
+    {
+        $penjualan = Penjualan_Obat::findOrFail($request->id);
+        // dd($penjualan);
+        $detail = Detail_penjualan::where('no_transaksi',$penjualan->no_transaksi)->get();
+        $data['penjualan'] = $penjualan;
+        $data['detail'] = $detail;
+        return view('back.pages.part_of.detail_penjualan',$data);
     }
 }

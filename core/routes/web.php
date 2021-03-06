@@ -19,7 +19,11 @@ Route::get('logout',['as' => 'logout','uses' => 'AuthController@logout']);
 
 Route::group(['middleware' => 'auth'], function(){
     Route::prefix('admin')->group(function(){
-        Route::get('dashboard',['as' => 'back.dashboard','uses' => 'BackDashboardController@index']);
+        
+    Route::prefix('dashboard')->group(function(){
+        Route::get('/',['as' => 'back.dashboard','uses' => 'BackDashboardController@index']);
+        Route::get('grafikobat',['as' => 'grafik.obat','uses' => 'BackDashboardController@grafikObat']);
+    });
         
         Route::prefix('user')->group(function(){
             Route::get('/',['as' => 'back.user','uses' => 'UserController@index']);
@@ -80,7 +84,7 @@ Route::group(['middleware' => 'auth'], function(){
             Route::prefix('histori_penjualan')->group(function(){
                 Route::get('/',['as' => 'histori.penjualan', 'uses' => 'HistoriPenjualanController@index']);
                 Route::get('datapenjualan',['as' => 'histori.penjualan.data', 'uses' => 'HistoriPenjualanController@datapenjualan']);
-                // Route::get('detail',['as' => 'histori.penjualan.detail', 'uses' => 'HistoripenjualanController@detailpenjualan']);
+                Route::get('detail',['as' => 'histori.penjualan.detail', 'uses' => 'HistoripenjualanController@detailpenjualan']);
                 Route::get('print/{id}', ['as' => 'histori.penjualan.print', 'uses' => 'HistoriPenjualanController@struk']);
             });
         });
@@ -88,7 +92,9 @@ Route::group(['middleware' => 'auth'], function(){
         Route::prefix('laporan')->group(function(){
             Route::prefix('penjualan')->group(function(){
                 Route::get('/',['as' => 'laporan.penjualan', 'uses' => 'LaporanController@indexPenjualan']);
+                Route::get('index',['as' => 'laporan.penjualan.index2', 'uses' => 'LaporanController@indexPenjualan2']);
                 Route::post('cetak',['as' => 'laporan.penjualan.cetak', 'uses' => 'LaporanController@cetakPenjualan']);
+                Route::post('cetak2',['as' => 'laporan.penjualan.cetak2', 'uses' => 'LaporanController@cetak2']);
             });
         });
 

@@ -8,6 +8,30 @@
         </div>
         <div class="modal-body">
             <div class="table-responsive">
+                <table>
+                    <tr>
+                        <td><b>Nomor Faktur</b></td>
+                        <td>:</td>
+                        <td>
+                            {{$pembelian->no_faktur}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Tanggal Faktur</b></td>
+                        <td>:</td>
+                        <td>
+                            {{$pembelian->tgl_faktur}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>User</b></td>
+                        <td>:</td>
+                        <td>
+                            {{$pembelian->user->name}}
+                        </td>
+                    </tr>
+                </table>
+                <br>
                 <table class="table table-bordered" id="tabelDetail">
                     <tr>
                         <th style="max-width: 40px;min-width:40px">No</th>

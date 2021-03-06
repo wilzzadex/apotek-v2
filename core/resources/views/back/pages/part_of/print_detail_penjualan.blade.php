@@ -66,9 +66,9 @@
             <th>Jumlah</th>
             <th style="min-width: 150px">Harga beli satuan</th>
             <th>Diskon</th>
-            <th>Margin Jual</th>
+            {{-- <th>Margin Jual</th> --}}
             <th>Nominal Diskon</th>
-            <th>Nominal Margin</th>
+            {{-- <th>Nominal Margin</th> --}}
             <th>Subtotal</th>
         </tr>
         @php
@@ -106,9 +106,9 @@
             <td>{{ $item->jumlah_obat }} {{ $item->unit->nama }}</td>
             <td>Rp.{{ number_format($item->harga_beli,0,',','.') }}</td>
             <td>{{ $item->diskon }} %</td>
-            <td>{{ $item->margin_jual }} %</td>
+            {{-- <td>{{ $item->margin_jual }} %</td> --}}
             <td>Rp.{{ number_format((($item->diskon / 100) * $subtotal),0,',','.') }}</td>
-            <td>Rp.{{ number_format((($item->margin_jual / 100) * $item->harga_beli),0,',','.') }}</td>
+            {{-- <td>Rp.{{ number_format((($item->margin_jual / 100) * $item->harga_beli),0,',','.') }}</td> --}}
             <td>Rp.{{ number_format($fix_total,0,',','.') }}</td>
         </tr>
         @endforeach
@@ -118,20 +118,20 @@
         @endphp
         <tr>
             <th colspan="2" style="vertical-align : middle;text-align:center;">TOTAL 1</th>
-            <th colspan="2" style="vertical-align : middle;text-align:center;">POT PENJUALAN</th>
+            <th colspan="" style="vertical-align : middle;text-align:center;">POT PENJUALAN</th>
             <th colspan="2" style="vertical-align : middle;text-align:center;">TOTAL 2</th>
             <th colspan="2" style="vertical-align : middle;text-align:center;">PPN ({{ $pembelian->pajak }}%)</th>
             <th colspan="3" style="vertical-align : middle;text-align:center;">JUMLAH TAGIHAN</th>
         </tr>
         <tr>
             <th colspan="2" style="vertical-align : middle;text-align:center;">{{ number_format($total_1,0,',','.') }}</th>
-            <th colspan="2" style="vertical-align : middle;text-align:center;">{{ number_format($pot_pen,0,',','.') }}</th>
+            <th colspan="" style="vertical-align : middle;text-align:center;">{{ number_format($pot_pen,0,',','.') }}</th>
             <th colspan="2" style="vertical-align : middle;text-align:center;">{{ number_format($total_2,0,',','.') }}</th>
             <th colspan="2" style="vertical-align : middle;text-align:center;">{{ number_format($pajak,0,',','.') }}</th>
             <th colspan="3" rowspan="2" style="vertical-align : middle;text-align:center;">{{ number_format($pembelian->jumlah_tagihan,0,',','.') }}</th>
         </tr>
         <tr>
-            <th colspan="8">Biaya Lain : {{ number_format($pembelian->biaya_lain,0,',','.') }}</th>
+            <th colspan="7">Biaya Lain : {{ number_format($pembelian->biaya_lain,0,',','.') }}</th>
         </tr>
     </table>
 </body>

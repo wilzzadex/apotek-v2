@@ -1,6 +1,6 @@
 @extends('back.master')
 @section('breadcumb')
-Laporan / Penjualan Obat
+Laporan / Laba Rugi
 @endsection
 
 @section('content')

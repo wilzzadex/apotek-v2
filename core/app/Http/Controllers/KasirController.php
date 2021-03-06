@@ -126,7 +126,7 @@ class KasirController extends Controller
             $detail->save();
 
             $update_stok = Satuan_Obat::where('kode_obat',$detail->kode_obat)->where('unit_id',$detail->unit_id)->first();
-            $update_stok->stok = ($update_stok->stok + $item->jumlah_obat);
+            $update_stok->stok = ($update_stok->stok - $item->jumlah_obat);
             $update_stok->save();
         }
 

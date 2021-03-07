@@ -180,10 +180,46 @@ class OrderController extends Controller
             $detail->user_id = $temp->user_id;
             $detail->save();
 
-            $update_stok = Satuan_Obat::where('kode_obat',$detail->kode_obat)->where('unit_id',$detail->unit_id)->first();
-            $update_stok->harga_jual = $temp->harga_beli + (($temp->margin_jual / 100) * $temp->harga_beli);
-            $update_stok->stok = ($update_stok->stok + $temp->jumlah_obat);
-            $update_stok->save();
+            // $satuan_obat = Satuan_Obat::where('kode_obat',$temp->kode_obat)->get();
+            // foreach($satuan_obat as $so){
+            //     echo '1' . $so->unit->nama . ' = ' . $so->jumlah_satuan . ' ' . $so->satuanParent->nama . '  <br>'; 
+            // }
+            $update_stok1 = Satuan_Obat::where('kode_obat',$temp->kode_obat)->where('unit_id',$temp->unit_id)->first();
+            $update_stok1->harga_jual = $temp->harga_beli + (($temp->margin_jual / 100) * $temp->harga_beli);
+            $update_stok1->stok = ($update_stok1->stok + $temp->jumlah_obat);
+            $update_stok1->save();
+
+            $update_stok = Satuan_Obat::where('kode_obat',$temp->kode_obat)->where('unit_id',$temp->unit_id)->first();
+            $satuan_atas = Unit::select('unit.id','satuan_obat.stok','satuan_obat.kode_obat','unit.tingkat_satuan','satuan_obat.id as id_satuan')->where('tingkat_satuan','>=',$update_stok->unit->tingkat_satuan)->join('satuan_obat','unit.id','=','satuan_obat.unit_id')->where('kode_obat',$temp->kode_obat)->orderBy('tingkat_satuan','asc');
+            $satuan_bawah = Unit::select('unit.id','satuan_obat.stok','satuan_obat.kode_obat','unit.tingkat_satuan','satuan_obat.id as id_satuan')->where('tingkat_satuan','<=',$update_stok->unit->tingkat_satuan)->join('satuan_obat','unit.id','=','satuan_obat.unit_id')->where('kode_obat',$temp->kode_obat)->orderBy('tingkat_satuan','DESC');
+            $cek_atas = count($satuan_atas->get());
+            $cek_bawah = count($satuan_bawah->get());
+            
+            if($cek_bawah > 0){
+                foreach($satuan_bawah->get() as $key => $ca){
+                    if($ca->id_satuan !=  $update_stok1->id){
+                        $bawah = Satuan_Obat::where('unit_id',$ca->id)->where('id','!=',$update_stok1->id)->where('kode_obat',$temp->kode_obat)->first();
+                        $get_parent = Satuan_Obat::where('id',$bawah->sama_dengan)->first();  
+                        $bawah->stok = ($get_parent->jumlah_satuan * $get_parent->stok);
+                        $bawah->harga_jual = ($temp->harga_beli + (($temp->margin_jual / 100) * $temp->harga_beli)) / $temp->jumlah_obat;
+                        $bawah->save(); 
+                    }
+                       
+                }
+            }
+            
+            if($cek_atas > 0){
+                foreach($satuan_atas->get() as $key => $cas){
+                    if($cas->id_satuan !=  $update_stok1->id){
+                        $atas = Satuan_Obat::where('unit_id',$cas->id)->where('id','!=',$update_stok1->id)->where('kode_obat',$temp->kode_obat)->first();
+                        $get_parent_atas = Satuan_Obat::where('unit_id',$atas->unit_id_sama_dengan)->first();  
+                        $atas->stok = ($get_parent_atas->stok / $atas->jumlah_satuan );
+                        $atas->harga_jual = ($temp->harga_beli + (($temp->margin_jual / 100) * $temp->harga_beli)) * $temp->jumlah_obat;
+                        $atas->save(); 
+                    }
+                       
+                }
+            }       
         }
 
         $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();

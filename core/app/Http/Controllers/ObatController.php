@@ -52,6 +52,10 @@ class ObatController extends Controller
             $satuan_obat->jumlah_satuan = isset($request->jumlah) ? $request->jumlah[$key] : 0;
             $satuan_obat->unit_id_sama_dengan = $request->sama_dengan[$key];
             $satuan_obat->save();
+
+            // if($satuan_obat->unit_id != $satuan_obat->unit_id_sama_dengan){
+            //     $before_id = $satuan_obat
+            // }
         }
 
         return redirect(route('obat'))->with('success','Data Berhasil di simpan');

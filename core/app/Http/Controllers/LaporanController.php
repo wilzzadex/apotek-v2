@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Exports\PenjualanExport;
 use App\Exports\PenjualanExport2;
+use App\Models\Detail_pembelian;
 use App\Models\Detail_penjualan;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Pembelian;
@@ -104,5 +105,40 @@ class LaporanController extends Controller
 
         
     
+    }
+
+    public function indexPembelian()
+    {
+        return view('back.pages.laporan.index_pembelian');
+    }
+
+    public function cetakPembelian(Request $request)
+    {
+        // dd($request->all());
+        if($request->tanggal == null){
+            return redirect()->back();
+        }
+        $input = $request->tanggal;
+        $pecah = explode(" - ",$input);
+        $tanggal_awal = date('Y-m-d',strtotime($pecah[0]));
+        $tanggal_akhir = date('Y-m-d',strtotime($pecah[1]));
+
+        if($request->type == 'semua'){
+            $pembelian =  Pembelian::whereBetween('created_at',[$tanggal_awal . ' 00:00:00',$tanggal_akhir . ' 00:00:00'])->get();
+        }elseif($request->type == 'tunai'){
+            $pembelian =  Pembelian::where('jenis','Tunai')->whereBetween('created_at',[$tanggal_awal . ' 00:00:00',$tanggal_akhir . ' 00:00:00'])->get();
+        }else{
+            
+            $pembelian =  Pembelian::where('jenis','Kredit')->whereBetween('created_at',[$tanggal_awal . ' 00:00:00',$tanggal_akhir . ' 00:00:00'])->get();
+        }
+        $data['pembelian'] = $pembelian;
+
+        if($request->is_detail){
+            $detail = Detail_pembelian::get();
+            $data['detail'] = $detail;
+            return view('back.pages.laporan.pdf_detail_pembelian',$data);
+        }
+
+        return view('back.pages.laporan.pdf_pembelian',$data);
     }
 }

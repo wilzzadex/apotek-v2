@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('detail',['as' => 'histori.penjualan.detail', 'uses' => 'HistoripenjualanController@detailpenjualan']);
                 Route::get('print/{id}', ['as' => 'histori.penjualan.print', 'uses' => 'HistoriPenjualanController@struk']);
             });
+
         });
 
         Route::prefix('laporan')->group(function(){
@@ -95,6 +96,11 @@ Route::group(['middleware' => 'auth'], function(){
                 Route::get('index',['as' => 'laporan.penjualan.index2', 'uses' => 'LaporanController@indexPenjualan2']);
                 Route::post('cetak',['as' => 'laporan.penjualan.cetak', 'uses' => 'LaporanController@cetakPenjualan']);
                 Route::post('cetak2',['as' => 'laporan.penjualan.cetak2', 'uses' => 'LaporanController@cetak2']);
+            });
+
+            Route::prefix('pembelian')->group(function(){
+                Route::get('/',['as' => 'laporan.pembelian', 'uses' => 'LaporanController@indexPembelian']);
+                Route::post('cetak',['as' => 'laporan.pembelian.cetak', 'uses' => 'LaporanController@cetakPembelian']);
             });
         });
 

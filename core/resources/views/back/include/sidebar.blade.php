@@ -157,7 +157,7 @@
                             </a>
                         </li>
                         <li class="menu-item {{ Request::is('admin/laporan/pembelian*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
-                            <a href="{{ route('laporan.penjualan') }}" class="menu-link">
+                            <a href="{{ route('laporan.pembelian') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
                                 </i>

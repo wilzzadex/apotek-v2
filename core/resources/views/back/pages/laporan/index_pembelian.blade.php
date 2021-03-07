@@ -10,69 +10,38 @@ Laporan / Pembelian Obat
         <div class="container">
             <div class="card mb-3">
                 <div class="card-body">
-                    <form action="{{ route('laporan.penjualan.cetak2') }}" method="POST" target="_blank" class="form">
+                    <form action="{{ route('laporan.pembelian.cetak') }}" method="POST" target="_blank" class="form">
                         @csrf
                         @if (auth()->user()->role == 'admin')
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input type="checkbox" name="is_detail" value="is_detail" id="detail_pen"> <label for="detail_pen"> Cetak dengan detail penjualan</label>
+                                    <input type="checkbox" name="is_detail" value="is_detail" id="detail_pen"> <label for="detail_pen"> Cetak dengan detail pembelian</label>
                                 </div>
                                 <br>
                                 <div class="col-3">
-                                    <label>Berdasarkan</label>
-                                    <select name="type" id="type" class="form-control">
-                                        <option value="">Pilih Type...</option>
-                                        <option value="periode">Periode</option>
-                                        <option value="kasir">Kasir</option>
+                                    <label>Jenis</label>
+                                    <select name="type" class="form-control">
+                                        <option value="semua">Semua</option>
+                                        <option value="tunai">Tunai</option>
+                                        <option value="kredit">Kredit</option>
                                     </select>
                                 </div>
-                                <div class="col-3" style="display: none " id="daftar_kasir">
-                                    <label>Daftar Kasir</label> <br>
-                                    <select name="kasir_id" id="kasir_id" style="width: 100%" class="form-control">
-                                        <option value="">Pilih Kasir...</option>
-                                        @foreach ($kasir as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option> 
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-3" id="showTanggal" style="display: none">
-                                    <label>Pilih Tanggal</label>
+                                <div class="col-3" id="showTanggal">
+                                    <label>Pilih Periode</label>
                                     <div class='input-group' id='kt_daterangepicker_6'>
-                                        <input required type='text' name="tanggal" class="form-control" readonly placeholder="Select date range" />
+                                        <input type='text' name="tanggal" required class="form-control" readonly placeholder="Select date range" />
                                         <div class="input-group-append">
                                             <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
                                         </div>
                                     </div>
                                 </div>
                                
-                                <div class="col-3" id="btnn" style="display: none">
+                                <div class="col-3" id="btnn">
                                     
                                     <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button>
                                     <button type="submit" name="type_button" value="pdf" class="btn btn-danger" style="margin-top: 25px">Export PDF</button>
                                 </div>
                             </div>
-                        @endif
-                        @if (auth()->user()->role == 'kasir')
-                        <div class="form-group row">
-                           
-                            <div class="col-3" style=" " id="daftar_kasir">
-                                <label> Kasir</label> <br>
-                                <input type="hidden" readonly class="form-control" name="kasir_id" value="{{ auth()->user()->id }}">
-                                <input class="form-control" readonly value="{{ auth()->user()->name }}">
-                            </div>
-                            <div class="col-3" id="showTanggal" style="display: ">
-                                <label>Pilih Tanggal</label>
-                                <div class='input-group' id='kt_daterangepicker_6'>
-                                    <input required type='text' name="tanggal" class="form-control" readonly placeholder="Select date range" />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3" id="btnn" style="display:">
-                                <button type="submit" class="btn btn-success" style="margin-top: 25px">Export Excel</button>
-                            </div>
-                        </div>
                         @endif
                     </form>
                 </div>

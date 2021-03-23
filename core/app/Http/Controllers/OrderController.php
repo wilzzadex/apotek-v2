@@ -180,10 +180,7 @@ class OrderController extends Controller
             $detail->user_id = $temp->user_id;
             $detail->save();
 
-            // $satuan_obat = Satuan_Obat::where('kode_obat',$temp->kode_obat)->get();
-            // foreach($satuan_obat as $so){
-            //     echo '1' . $so->unit->nama . ' = ' . $so->jumlah_satuan . ' ' . $so->satuanParent->nama . '  <br>'; 
-            // }
+          
             $update_stok1 = Satuan_Obat::where('kode_obat',$temp->kode_obat)->where('unit_id',$temp->unit_id)->first();
             $update_stok1->harga_jual = $temp->harga_beli + (($temp->margin_jual / 100) * $temp->harga_beli);
             $update_stok1->stok = ($update_stok1->stok + $temp->jumlah_obat);
@@ -222,9 +219,9 @@ class OrderController extends Controller
             }       
         }
 
-        $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
+        // $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
 
-        return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
+        // return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
     }
 
     public function getObatUnit(Request $request)

@@ -41,7 +41,7 @@ Transaksi / Pembelian Obat
                                             <span class="text-danger">*</span></label>
                                             <div class="input-group input-group-solid date" id="kt_datetimepicker_3"
                                                 data-target-input="nearest">
-                                                <input type="text" name="tanggal_faktur"
+                                                <input type="text" name="tanggal_faktur" autocomplete="off"
                                                     class="form-control form-control-solid datetimepicker-input"
                                                     placeholder="Pilih Tanggal" data-target="#kt_datetimepicker_3" />
                                                 <div class="input-group-append" data-target="#kt_datetimepicker_3"

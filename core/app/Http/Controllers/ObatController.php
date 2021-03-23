@@ -9,6 +9,7 @@ use App\Models\Obat;
 use App\Models\Unit;
 use App\Models\Satuan_Obat;
 use Facade\FlareClient\View;
+use DB;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -46,11 +47,14 @@ class ObatController extends Controller
         $obat->save();
 
         foreach($request->jumlah_satuan as $key => $item){
+            $statement = DB::select("SHOW TABLE STATUS LIKE 'satuan_obat'");
+            $nextId = $statement[0]->Auto_increment;
             $satuan_obat = new Satuan_Obat();
             $satuan_obat->kode_obat = $obat->kode_obat;
             $satuan_obat->unit_id = $request->jumlah_satuan[$key];
             $satuan_obat->jumlah_satuan = isset($request->jumlah) ? $request->jumlah[$key] : 0;
             $satuan_obat->unit_id_sama_dengan = $request->sama_dengan[$key];
+            $satuan_obat->sama_dengan = $nextId + 1;
             $satuan_obat->save();
 
             // if($satuan_obat->unit_id != $satuan_obat->unit_id_sama_dengan){

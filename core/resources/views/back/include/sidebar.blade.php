@@ -56,7 +56,7 @@
                             </a>
                         </li>
 
-                        <li class="menu-item {{ Request::is('admin/kategori*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
+                        {{-- <li class="menu-item {{ Request::is('admin/kategori*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                             <a href="{{ route('unit') }}" class="menu-link">
                                 <i class="menu-bullet menu-bullet-dot">
                                     <span></span>
@@ -72,7 +72,7 @@
                                 </i>
                                 <span class="menu-text">Data Golongan</span>
                             </a>
-                        </li>
+                        </li> --}}
 
                         <li class="menu-item {{ Request::is('admin/obat*') ? 'menu-item-active' : '' }}" aria-haspopup="true">
                             <a href="{{ route('obat') }}" class="menu-link">
@@ -253,7 +253,7 @@
                 <a href="{{ route('histori.penjualan') }}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
-                        <i class="fas fa-money-bill-alt"></i>
+                        <i class="fas fa-history"></i>
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-text">Histori Penjualan</span>
@@ -263,7 +263,7 @@
                 <a href="{{ route('laporan.penjualan.index2') }}" class="menu-link">
                     <span class="svg-icon menu-icon">
                         <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
-                        <i class="fas fa-money-bill-alt"></i>
+                        <i class="fas fa-file-alt"></i>
                         <!--end::Svg Icon-->
                     </span>
                     <span class="menu-text">Laporan Penjualan</span>

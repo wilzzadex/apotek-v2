@@ -124,5 +124,6 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('gettotal',['as' => 'kasir.get.total','uses' => 'KasirController@getTotal']);
         Route::post('store',['as' => 'store.penjualan','uses' => 'KasirController@store']);
         Route::get('listdes',['as' => 'list.destroy','uses' => 'KasirController@listDestroy']);
+        Route::post('print', ['as' => 'kasir.print', 'uses' => 'HistoriPenjualanController@struk_kasir']);
     });
 });

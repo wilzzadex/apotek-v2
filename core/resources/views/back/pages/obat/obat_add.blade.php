@@ -139,6 +139,7 @@
     $('#btn-satuan').on('click',function(){
         let elemen_satuan = $('.jml_satuan').length;
         let renderSatuan =  $('#renderSatuan');
+        let id_div = 1;
         var i;
         
         // console.log(elemen_satuan)
@@ -156,8 +157,10 @@
                     satuan_selected :  val1,
                 },
                 success : function(res){
-                    // console.log(res.html_satuan)
-                    html_satuan += `<div class="form-group row jml_satuan">
+                    if((res.satuan).length == 0){
+                       customAlert('Tingkat satuan sudah maksimal !','','warning');
+                    }else{
+                        html_satuan += `<div class="form-group row jml_satuan" id="id_div_`+id_div+`">
                                         <div class="col-5">
                                             <label>Satuan Ke `+ el_id +`</label>
                                             <div class="input-group">
@@ -172,14 +175,20 @@
                                         <div class="col2">
                                         <h3 style="margin:30px"> = </h3>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-3">
                                             <label>`+res.satuan_next.nama+`</label>
                                             <input type="number" min="1" value="0" name="jumlah[]" required class="form-control" placeholder="Masukan Jumlah" aria-describedby="basic-addon2"/>
                                             <input type="hidden" name="sama_dengan[]" value="`+res.satuan_next.id+`">
                                         </div>
+                                        <div class="col-2">
+                                            <button type="button" onclick="deleteDiv(`+id_div+`)" class="btn btn-sm btn-danger" style="margin-top:30px"><i class="fa fa-trash"></i></button>
+                                        </div>
                                         
                                     </div>
                                     `;
+                    }
+                   
+                   
                                 
                     renderSatuan.append(html_satuan);
                     $('#satuan_id_'+el_id).select2();
@@ -188,11 +197,16 @@
                         // $('#satuan_id_'+i).prop('disabled',true)
                         // console.log(i)
                     }
+                    id_div++;
                 }
             })
             
         }
     })
+
+    function deleteDiv(id){
+        $('#id_div_'+id).remove();
+    }
 
     var runValidator = function () {
         var form = $('#userAdd');

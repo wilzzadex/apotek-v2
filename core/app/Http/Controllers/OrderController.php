@@ -159,10 +159,13 @@ class OrderController extends Controller
         $pembelian->user_id = $user_id;
         $pembelian->jumlah_tagihan = str_replace(".","",$request->jumlah_tagihan);
         $pembelian->status_tagihan = 'lunas';
+        $pembelian->tanggal_pengeluaran = date('Y-m-d');
         if($request->jenis == 'Kredit'){
             $pembelian->jatuh_tempo = date('Y-m-d',strtotime($request->jatuh_tempo));
+            $pembelian->tanggal_pengeluaran = date('Y-m-d',strtotime($request->jatuh_tempo));
             $pembelian->status_tagihan = 'belum_lunas';
         }
+
         $pembelian->save();
         $temp = Temp_Pembelian_Obat::where('user_id', $user_id);
         foreach($temp->get() as $temp){
@@ -219,9 +222,9 @@ class OrderController extends Controller
             }       
         }
 
-        // $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
+        $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
 
-        // return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
+        return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
     }
 
     public function getObatUnit(Request $request)

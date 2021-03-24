@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Penjualan_Obat;
 use App\Models\Detail_penjualan;
+use App\Models\Temp_penjualan_obat;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -59,6 +60,15 @@ class HistoriPenjualanController extends Controller
         $data['penjualan'] = $penjualan;
         $data['detail_penjualan'] = $detail_penjualan;
         return view('back.pages.laporan.struk',$data);
+    }
+
+    public function struk_kasir(Request $request)
+    {
+        $data['penjualan'] = Temp_penjualan_obat::where('user_id',$request->user_id)->get();
+        $data['form'] = $request->all();
+        // dd($data);
+        return view('back.pages.laporan.struk_kasir',$data);
+
     }
 
     public function detailpenjualan(Request $request)

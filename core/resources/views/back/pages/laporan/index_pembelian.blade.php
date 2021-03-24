@@ -38,7 +38,7 @@ Laporan / Pembelian Obat
                                
                                 <div class="col-3" id="btnn">
                                     
-                                    <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button>
+                                    {{-- <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button> --}}
                                     <button type="submit" name="type_button" value="pdf" class="btn btn-danger" style="margin-top: 25px">Export PDF</button>
                                 </div>
                             </div>

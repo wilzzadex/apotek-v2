@@ -56,12 +56,12 @@
         <tr>
             <td>Tanggal</td>
             <td>:</td>
-            <td>{{ date('d M Y H:i',strtotime($penjualan->created_at)) }}</td>
+            <td>{{ date('d M Y H:i') }}</td>
         </tr>
         <tr>
             <td>No Transaksi</td>
             <td>:</td>
-            <td>{{ $penjualan->no_transaksi }}</td>
+            <td>{{ $form['no_transaksi'] }}</td>
         </tr>
         <tr>
             <td>Kasir</td>
@@ -77,7 +77,7 @@
             <td colspan="3">================================</td>
         </tr>
 
-        @foreach ($detail_penjualan as $item)
+        @foreach ($penjualan as $item)
         <tr>
             <td colspan="3">{{ $item->kode_obat }} - {{ $item->obat->nama_obat }}</td>
         </tr>
@@ -97,7 +97,7 @@
         <tr>
             <td align="right">Total</td>
             <td>:</td>
-            <td align="right">{{ number_format($penjualan->jumlah_bayar) }}</td>
+            <td align="right">{{ $form['total_bayar']}}</td>
         </tr>
         {{-- <tr>
             <td align="right">Dikon</td>
@@ -107,12 +107,12 @@
         <tr>
             <td><b> Grand Total </b></td>
             <td>:</td>
-            <td align="right"><b> {{ number_format($penjualan->jumlah_bayar) }} </b></td>
+            <td align="right"><b> {{ $form['total_bayar'] }} </b></td>
         </tr>
         <tr>
             <td><b> Tunai </b></td>
             <td>:</td>
-            <td align="right">{{ number_format($penjualan->uang_bayar) }}</td>
+            <td align="right">{{ $form['uang_bayar']}}</td>
         </tr>
         <tr>
             <td colspan="3" align="right">--------------------------------------</td>
@@ -120,7 +120,7 @@
         <tr>
             <td><b> Kembali </b></td>
             <td>:</td>
-            <td align="right">{{  number_format($penjualan->uang_kembali) }}</td>
+            <td align="right">{{  $form['uang_kembali'] }}</td>
         </tr>
         <tr>
             <td colspan="3"> <br> </td>

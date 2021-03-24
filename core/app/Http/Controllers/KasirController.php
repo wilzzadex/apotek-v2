@@ -7,6 +7,7 @@ use App\Models\Obat;
 use App\Models\Penjualan_Obat;
 use App\Models\Satuan_Obat;
 use App\Models\Temp_penjualan_obat;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class KasirController extends Controller
@@ -20,7 +21,11 @@ class KasirController extends Controller
     {
         $obat = Obat::where('nama_obat','like','%' . $request->keyword . '%')->orWhere('kode_obat','like','%' . $request->keyword . '%')->with('satuans')->get();
         $data['obat'] = $obat;
-        return view('back.pages.part_of.tabel_show_obat',$data);
+        $data['html'] = view('back.pages.part_of.tabel_show_obat',$data)->render();
+        if(count($obat) == 0){
+            $data['kosong'] = 'kosong';
+        }
+        return response()->json($data);
     }
 
     public function addtolist(Request $request)
@@ -125,10 +130,46 @@ class KasirController extends Controller
             $detail->user_id = $user_id;
             $detail->save();
 
-            $update_stok = Satuan_Obat::where('kode_obat',$detail->kode_obat)->where('unit_id',$detail->unit_id)->first();
-            $update_stok->stok = ($update_stok->stok - $item->jumlah_obat);
-            $update_stok->save();
+            // $update_stok = Satuan_Obat::where('kode_obat',$detail->kode_obat)->where('unit_id',$detail->unit_id)->first();
+            // $update_stok->stok = ($update_stok->stok - $item->jumlah_obat);
+            // $update_stok->save();
+
+            $update_stok1 = Satuan_Obat::where('kode_obat',$item->kode_obat)->where('unit_id',$item->unit_id)->first();
+            $update_stok1->stok = ($update_stok1->stok - $item->jumlah_obat);
+            $update_stok1->save();
+
+            $update_stok = Satuan_Obat::where('kode_obat',$item->kode_obat)->where('unit_id',$item->unit_id)->first();
+            $satuan_atas = Unit::select('unit.id','satuan_obat.stok','satuan_obat.kode_obat','unit.tingkat_satuan','satuan_obat.id as id_satuan')->where('tingkat_satuan','>=',$update_stok->unit->tingkat_satuan)->join('satuan_obat','unit.id','=','satuan_obat.unit_id')->where('kode_obat',$item->kode_obat)->orderBy('tingkat_satuan','asc');
+            $satuan_bawah = Unit::select('unit.id','satuan_obat.stok','satuan_obat.kode_obat','unit.tingkat_satuan','satuan_obat.id as id_satuan')->where('tingkat_satuan','<=',$update_stok->unit->tingkat_satuan)->join('satuan_obat','unit.id','=','satuan_obat.unit_id')->where('kode_obat',$item->kode_obat)->orderBy('tingkat_satuan','DESC');
+            $cek_atas = count($satuan_atas->get());
+            $cek_bawah = count($satuan_bawah->get());
+            
+            if($cek_bawah > 0){
+                foreach($satuan_bawah->get() as $key => $ca){
+                    if($ca->id_satuan !=  $update_stok1->id){
+                        $bawah = Satuan_Obat::where('unit_id',$ca->id)->where('id','!=',$update_stok1->id)->where('kode_obat',$item->kode_obat)->first();
+                        $get_parent = Satuan_Obat::where('id',$bawah->sama_dengan)->first();  
+                        $bawah->stok = ($get_parent->jumlah_satuan * $get_parent->stok);
+                        $bawah->save(); 
+                    }
+                       
+                }
+            }
+            
+            if($cek_atas > 0){
+                foreach($satuan_atas->get() as $key => $cas){
+                    if($cas->id_satuan !=  $update_stok1->id){
+                        $atas = Satuan_Obat::where('unit_id',$cas->id)->where('id','!=',$update_stok1->id)->where('kode_obat',$item->kode_obat)->first();
+                        $get_parent_atas = Satuan_Obat::where('unit_id',$atas->unit_id_sama_dengan)->first();  
+                        $atas->stok = ($get_parent_atas->stok / $atas->jumlah_satuan );
+                        $atas->save(); 
+                    }
+                       
+                }
+            }       
         }
+
+        
 
         $dele = Temp_penjualan_obat::where('user_id',$user_id)->delete();
         return redirect()->back()->with('success','Transaksi Berhasil di simpan');

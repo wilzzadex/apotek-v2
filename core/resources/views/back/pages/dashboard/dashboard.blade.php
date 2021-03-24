@@ -10,23 +10,6 @@ Dashboard
     <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
         <div class="container">
-            <!--begin::Dashboard-->
-            <!--begin::Row-->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <label>Pilih Tanggal</label>
-                            <div class='input-group' id='kt_daterangepicker_6'>
-                                <input required type='text' onchange="changeTanggal(this)" id="tanggals" name="tanggal" class="form-control" readonly placeholder="Select date range" />
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="la la-calendar-check-o"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-lg-12 col-xxl-12">
                     <!--begin::Mixed Widget 1-->

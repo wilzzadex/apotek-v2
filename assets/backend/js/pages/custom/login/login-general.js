@@ -48,7 +48,12 @@ var KTLogin = function() {
 				}
 			}
 		);
-
+		document.querySelector('#password').addEventListener('keypress', function (e) {
+			if (e.key === 'Enter') {
+				$('#kt_login_signin_submit').click();
+			}
+		});
+		
 		
 
         $('#kt_login_signin_submit').on('click', function (e) {

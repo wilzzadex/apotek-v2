@@ -102,7 +102,7 @@ class ObatController extends Controller
         })
         ->addColumn('harga_jual', function($query){
             $harga_jual = '';
-            $pembelian = Satuan_Obat::where('kode_Obat',$query->kode_obat)->get();
+            $pembelian = Satuan_Obat::where('kode_obat',$query->kode_obat)->get();
             foreach($pembelian as $key => $item){
                 $harga_jual .= 'Harga Jual Per ' . $item->unit->nama  . ' : ' . number_format($item->harga_Jual,0,',','.') . '<br>';
             }
@@ -110,24 +110,55 @@ class ObatController extends Controller
         })
         ->addColumn('stok', function($query){
             $stoks = '';
-            $pembelian = Satuan_Obat::where('kode_Obat',$query->kode_obat)->get();
+            $pembelian = Satuan_Obat::where('kode_obat',$query->kode_obat)->get();
             foreach($pembelian as $item){
                 $stoks .= $item->stok . ' ' . $item->unit->nama . '<br>';
             }
             return $stoks;
         })
+        ->addColumn('status', function($query){
+            $satuan = Satuan_Obat::where('kode_Obat',$query->kode_obat)->get();
+            $unit_id = [];
+            foreach($satuan as $item){
+                $unit_id[] .= $item->unit_id;
+            }
+            $unit = Unit::whereIn('id',$unit_id)->orderBy('tingkat_satuan','asc')->first();
+            $stok = Satuan_Obat::where('kode_obat',$query->kode_obat)->where('unit_id',$unit->id)->first();
+            $stok_ava = $stok->stok;
+            $stok_min = $query->stok_minimum;
+            if($stok_ava < $stok_min){
+                $html ='<span class="badge badge-warning">Restock!</span>';
+            }else{
+                $html ='<span class="badge badge-success">Available</span>';
+            }
+            return $html;
+        })
         ->addColumn('aksi', function($query){
-            return '<div class="dropdown dropdown-inline mr-4">
+            if(auth()->user()->role == 'admin'){
+                return '<div class="dropdown dropdown-inline mr-4">
                         <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="ki ki-bold-more-hor"></i>
                         </button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:void(0)" onclick="lihatDetail(this)" id="'.$query->id.'">Lihat Detail</a>
-                            <a class="dropdown-item" href="javascript:void(0)">Cetak</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="lihatDetail(this)" id="'.$query->id.'">Lihat Satuan</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Hapus</a>
                         </div>
                     </div>';
+            }else{
+                return '<div class="dropdown dropdown-inline mr-4">
+                <button type="button" class="btn btn-light-primary btn-icon btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="ki ki-bold-more-hor"></i>
+                </button>
+                <div class="dropdown-menu" style="">
+                    <a class="dropdown-item" href="javascript:void(0)" onclick="lihatDetail(this)" id="'.$query->id.'">Lihat Satuan</a>
+                    
+                </div>
+            </div>';
+            }
+            
         })
-        ->rawColumns(['aksi','no_batch','stok','harga_jual'])
+        ->rawColumns(['aksi','no_batch','stok','harga_jual','status'])
         ->addIndexColumn()
         ->make(true);
     }

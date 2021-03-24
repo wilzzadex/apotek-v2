@@ -97,7 +97,7 @@ License: You must have a valid license purchased only from themeforest(the above
 										<label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
 										{{-- <a href="javascript:;" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5" id="kt_login_forgot">Forgot Password ?</a> --}}
 									</div>
-									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" type="password" name="password" autocomplete="off" />
+									<input class="form-control form-control-solid h-auto py-6 px-6 rounded-lg" id="password" type="password" name="password" autocomplete="off" />
 								</div>
 								<!--end::Form group-->
 								<!--begin::Action-->

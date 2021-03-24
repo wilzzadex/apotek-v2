@@ -37,6 +37,8 @@ class SettingController extends Controller
             $setting->logo_aplikasi = $file_name;
         }
         $setting->nama_aplikasi = ucfirst($request->nama_aplikasi);
+        $setting->alamat_aplikasi = $request->alamat;
+        $setting->no_telp = $request->telp;
         $setting->save();
         return redirect()->back()->with('success','Berhasil menyimpan perubahan');
     }

@@ -1,5 +1,6 @@
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="table-show">
+    <thead>
     <tr>
         <td></td>
         <td>Obat</td>
@@ -9,6 +10,8 @@
         <td>Stok</td>
         <td>Harga Jual</td>
     </tr>
+</thead>
+<tbody>
     @foreach ($obat as $item)
     <tr>
         <td>
@@ -50,5 +53,5 @@
         </td>
     </tr>
     @endforeach                          
-                                        
+</tbody>                               
 </table>

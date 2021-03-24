@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+@php
+    $pengaturan = DB::table('app_setup')->where('apotek_id',1)->first();
+@endphp
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,14 +37,14 @@
         </tr>
         <tr>
             <td colspan="3">
-                <h3 style="margin: 0px;">GOOGLE APOTEK</h3>
+                <h3 style="margin: 0px;">{{ $pengaturan->nama_aplikasi }}</h3>
             </td>
         </tr>
         <tr>
-            <td colspan="3"><b>Margahayu, Kab. Bandung</b></td>
+            <td colspan="3"><b>{{ $pengaturan->alamat_aplikasi }}</b></td>
         </tr>
         <tr>
-            <td colspan="3"><b>Telp. 087773726667, Email : willy@gmail.com</b></td>
+            <td colspan="3"><b>{{ $pengaturan->no_telp }}</b></td>
         </tr>
     </table>
     <hr style="margin-bottom: -10px;">

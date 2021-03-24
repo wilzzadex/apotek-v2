@@ -40,6 +40,7 @@
                                     <th>No Batch - Exp</th>
                                     <th>Harga Jual</th>
                                     <th>Stok</th>
+                                    <th>Status</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -85,6 +86,7 @@
             {data: 'no_batch', name: 'no_batch'},
             {data: 'harga_jual', name: 'harga_jual'},
             {data: 'stok', name: 'stok'},
+            {data: 'status', name: 'status'},
             {data: 'aksi', name: 'aksi'},
            
         ]

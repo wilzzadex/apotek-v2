@@ -11,7 +11,7 @@
  Target Server Version : 100133
  File Encoding         : 65001
 
- Date: 23/03/2021 09:45:50
+ Date: 24/03/2021 15:52:12
 */
 
 SET NAMES utf8mb4;
@@ -28,6 +28,7 @@ CREATE TABLE `app_setup`  (
   `icon_aplikasi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `logo_aplikasi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `alamat_aplikasi` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  `no_telp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
@@ -36,7 +37,7 @@ CREATE TABLE `app_setup`  (
 -- ----------------------------
 -- Records of app_setup
 -- ----------------------------
-INSERT INTO `app_setup` VALUES (1, 1, 'Apotek Tes', NULL, 'apotek-tes1614864483.png', 'Jl.Kopo', '2021-03-04 20:28:04', '2021-03-04 13:28:04');
+INSERT INTO `app_setup` VALUES (1, 1, 'Apotek Dev Bandung', NULL, 'apotek-tes1616519018.jpg', 'Jl Kopo Sayati Margahayu', '022985544', '2021-03-24 14:38:52', '2021-03-24 07:38:52');
 
 -- ----------------------------
 -- Table structure for detail_pembelian_obat
@@ -58,7 +59,14 @@ CREATE TABLE `detail_pembelian_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of detail_pembelian_obat
+-- ----------------------------
+INSERT INTO `detail_pembelian_obat` VALUES (1, 'FTR00003', 'OBT0001', 'BTCH0001', 5, 0, 14, '2021-03-23', 15000, 0, 100, 1, '2021-03-23 16:48:50', '2021-03-23 16:48:50');
+INSERT INTO `detail_pembelian_obat` VALUES (2, 'FTR00003', 'OBT0003', 'BTCH0001', 5, 0, 14, '2021-03-24', 15000, 5, 50, 1, '2021-03-23 18:01:15', '2021-03-23 18:01:15');
+INSERT INTO `detail_pembelian_obat` VALUES (3, 'FTR128265', 'OBT0003', 'BTCH0001', 5, 0, 14, '2021-03-24', 15000, 5, 50, 1, '2021-03-24 07:22:00', '2021-03-24 07:22:00');
 
 -- ----------------------------
 -- Table structure for detail_penjualan_obat
@@ -77,7 +85,19 @@ CREATE TABLE `detail_penjualan_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of detail_penjualan_obat
+-- ----------------------------
+INSERT INTO `detail_penjualan_obat` VALUES (1, 'OBT0001', 'TRN-23032138', 2, 4, 6000, 0, 12000, 2, '2021-03-23 17:02:45', '2021-03-23 17:02:45');
+INSERT INTO `detail_penjualan_obat` VALUES (2, 'OBT0001', 'TRN-23032132', 3, 4, 6000, 0, 18000, 2, '2021-03-23 17:07:37', '2021-03-23 17:07:37');
+INSERT INTO `detail_penjualan_obat` VALUES (3, 'OBT0001', 'TRN-23032132', 3, 4, 6000, 0, 18000, 2, '2021-03-23 17:08:32', '2021-03-23 17:08:32');
+INSERT INTO `detail_penjualan_obat` VALUES (4, 'OBT0001', 'TRN-23032113', 1, 13, 6000, 0, 6000, 2, '2021-03-23 17:09:18', '2021-03-23 17:09:18');
+INSERT INTO `detail_penjualan_obat` VALUES (5, 'OBT0001', 'TRN-23032134', 1, 13, 15000, 0, 15000, 2, '2021-03-23 17:10:40', '2021-03-23 17:10:40');
+INSERT INTO `detail_penjualan_obat` VALUES (6, 'OBT0001', 'TRN-23032110', 1, 14, 30000, 0, 30000, 2, '2021-03-23 17:11:16', '2021-03-23 17:11:16');
+INSERT INTO `detail_penjualan_obat` VALUES (7, 'OBT0001', 'TRN-24032105', 2, 4, 7500, 0, 15000, 2, '2021-03-24 08:12:59', '2021-03-24 08:12:59');
+INSERT INTO `detail_penjualan_obat` VALUES (8, 'OBT0003', 'TRN-24032105', 3, 4, 4500, 0, 13500, 2, '2021-03-24 08:12:59', '2021-03-24 08:12:59');
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -172,12 +192,13 @@ CREATE TABLE `obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL,
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of obat
 -- ----------------------------
 INSERT INTO `obat` VALUES (22, 'OBT0001', 'Vitacimin', 10, 1, 2, 0, NULL, '2021-03-22 17:28:16', '2021-03-22 17:28:16');
+INSERT INTO `obat` VALUES (23, 'OBT0003', 'Amoxcilin', 100, 2, 2, 0, NULL, '2021-03-23 18:00:15', '2021-03-23 18:00:15');
 
 -- ----------------------------
 -- Table structure for pembelian_obat
@@ -195,10 +216,18 @@ CREATE TABLE `pembelian_obat`  (
   `jumlah_tagihan` int(11) NULL DEFAULT NULL,
   `status_tagihan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `user_id` int(11) NULL DEFAULT NULL,
+  `tanggal_pengeluaran` date NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of pembelian_obat
+-- ----------------------------
+INSERT INTO `pembelian_obat` VALUES (1, 'FTR00003', '2021-03-23', 1, 0, 0, 'Tunai', NULL, 75000, 'lunas', 1, '2021-03-23', '2021-03-24 14:18:24', '2021-03-24 14:18:24');
+INSERT INTO `pembelian_obat` VALUES (2, 'FTR00003', '2021-03-24', 1, 0, 0, 'Tunai', NULL, 71250, 'lunas', 1, '2021-03-23', '2021-03-24 14:18:28', '2021-03-24 14:18:28');
+INSERT INTO `pembelian_obat` VALUES (3, 'FTR128265', '2021-03-24', 1, 0, 0, 'Tunai', NULL, 71250, 'lunas', 1, '2021-03-24', '2021-03-24 07:22:00', '2021-03-24 07:22:00');
 
 -- ----------------------------
 -- Table structure for penjualan_obat
@@ -216,7 +245,18 @@ CREATE TABLE `penjualan_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of penjualan_obat
+-- ----------------------------
+INSERT INTO `penjualan_obat` VALUES (1, 'TRN-23032138', '2021-03-23', 0, 12000, 12000, 0, 2, '2021-03-23 17:02:45', '2021-03-23 17:02:45');
+INSERT INTO `penjualan_obat` VALUES (2, 'TRN-23032132', '2021-03-23', 0, 18000, 20000, 2000, 2, '2021-03-23 17:07:37', '2021-03-23 17:07:37');
+INSERT INTO `penjualan_obat` VALUES (3, 'TRN-23032132', '2021-03-23', 0, 18000, 20000, 2000, 2, '2021-03-23 17:08:32', '2021-03-23 17:08:32');
+INSERT INTO `penjualan_obat` VALUES (4, 'TRN-23032113', '2021-03-23', 0, 6000, 10000, 4000, 2, '2021-03-23 17:09:18', '2021-03-23 17:09:18');
+INSERT INTO `penjualan_obat` VALUES (5, 'TRN-23032134', '2021-03-23', 0, 15000, 20000, 5000, 2, '2021-03-23 17:10:40', '2021-03-23 17:10:40');
+INSERT INTO `penjualan_obat` VALUES (6, 'TRN-23032110', '2021-03-23', 0, 30000, 30000, 0, 2, '2021-03-23 17:11:16', '2021-03-23 17:11:16');
+INSERT INTO `penjualan_obat` VALUES (7, 'TRN-24032105', '2021-03-24', 0, 28500, 30000, 1500, 2, '2021-03-24 08:12:59', '2021-03-24 08:12:59');
 
 -- ----------------------------
 -- Table structure for satuan_obat
@@ -234,14 +274,17 @@ CREATE TABLE `satuan_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`, `stok`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 52 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of satuan_obat
 -- ----------------------------
-INSERT INTO `satuan_obat` VALUES (46, 'OBT0001', 4, '1', 4, 47, 0, 0, '2021-03-22 17:28:16', '2021-03-22 17:28:16');
-INSERT INTO `satuan_obat` VALUES (47, 'OBT0001', 13, '10', 4, 48, 0, 0, '2021-03-22 17:28:16', '2021-03-22 17:28:16');
-INSERT INTO `satuan_obat` VALUES (48, 'OBT0001', 14, '5', 13, 49, 0, 0, '2021-03-22 17:28:16', '2021-03-22 17:28:16');
+INSERT INTO `satuan_obat` VALUES (46, 'OBT0001', 4, '1', 4, 47, 198, 7500, '2021-03-24 15:12:59', '2021-03-24 08:12:59');
+INSERT INTO `satuan_obat` VALUES (47, 'OBT0001', 13, '10', 4, 48, 20, 15000, '2021-03-24 15:12:59', '2021-03-24 08:12:59');
+INSERT INTO `satuan_obat` VALUES (48, 'OBT0001', 14, '5', 13, 49, 4, 30000, '2021-03-24 00:11:16', '2021-03-23 17:11:16');
+INSERT INTO `satuan_obat` VALUES (49, 'OBT0003', 4, '1', 4, 50, 1497, 4500, '2021-03-24 15:12:59', '2021-03-24 08:12:59');
+INSERT INTO `satuan_obat` VALUES (50, 'OBT0003', 13, '10', 4, 51, 20, 4500, '2021-03-24 15:12:59', '2021-03-24 08:12:59');
+INSERT INTO `satuan_obat` VALUES (51, 'OBT0003', 14, '15', 13, 52, 1, 22500, '2021-03-24 15:12:59', '2021-03-24 08:12:59');
 
 -- ----------------------------
 -- Table structure for suplier
@@ -282,12 +325,7 @@ CREATE TABLE `temp_pembelian_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of temp_pembelian_obat
--- ----------------------------
-INSERT INTO `temp_pembelian_obat` VALUES (6, 'OBT0001', 'BTCH0001', 5, 0, 14, '2021-03-23', 15000, 0, 100, 1, '2021-03-23 00:30:05', '2021-03-22 17:30:05');
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for temp_penjualan_obat
@@ -305,7 +343,7 @@ CREATE TABLE `temp_penjualan_obat`  (
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `updated_at` datetime(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for unit

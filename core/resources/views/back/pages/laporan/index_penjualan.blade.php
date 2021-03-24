@@ -47,7 +47,7 @@ Laporan / Penjualan Obat
                                
                                 <div class="col-3" id="btnn" style="display: none">
                                     
-                                    <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button>
+                                    {{-- <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button> --}}
                                     <button type="submit" name="type_button" value="pdf" class="btn btn-danger" style="margin-top: 25px">Export PDF</button>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@ Laporan / Penjualan Obat
                                 </div>
                             </div>
                             <div class="col-3" id="btnn" style="display:">
-                                <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button>
+                                {{-- <button type="submit" name="type_button" value="excel" class="btn btn-success" style="margin-top: 25px">Export Excel</button> --}}
                                 <button type="submit" name="type_button" value="pdf" class="btn btn-danger" style="margin-top: 25px">Export PDF</button>
                                 
                             </div>

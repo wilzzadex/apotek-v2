@@ -1,4 +1,7 @@
 <html>
+    @php
+    $pengaturan = DB::table('app_setup')->where('apotek_id',1)->first();
+@endphp
 <head>
     <title>Laporan Data Penjualan Obat</title>
     <style>
@@ -32,10 +35,39 @@
             text-align: left;
             padding: 10px;
         }
+
+        #header-table {
+            margin-top: 30px;
+
+        }
+
+        #header-table td {
+            padding: 0px;
+        }
     </style>
     {{-- {{ date('d M Y',strtotime($dari)) }} s/d {{ date('d M Y',strtotime($sampai)) }} --}}
 <body>
-    <center><h3>Laporan Data Pembelian Obat</h3></center>
+    <table id="header-table">
+        <tr>
+            <td rowspan="5"><img src="{{asset('file_ref/pengaturan_aplikasi/'.$pengaturan->logo_aplikasi) }}" style="width: 70px; margin: 10px;" alt=""></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <h3 style="margin: 0px;">{{ $pengaturan->nama_aplikasi }}</h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>{{ $pengaturan->alamat_aplikasi }}</b></td>
+        </tr>
+        <tr>
+            <td colspan="3"><b>{{ $pengaturan->no_telp }}</b></td>
+        </tr>
+    </table>
+    <hr style="margin-bottom: -10px;">
+    <center>
+        <h3>Laporan Data Pembelian Obat<br>PERIODE {{ $input_tanggal }}</h3>
+    </center>
+    <hr>
 	<table id="ex2" width="100%">
         @php
             $no = 1;

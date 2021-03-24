@@ -27,7 +27,7 @@ class LaporanController extends Controller
         $tanggal_awal = date('Y-m-d',strtotime($pecah[0]));
         $tanggal_akhir = date('Y-m-d',strtotime($pecah[1]));
 
-        $pembelian = Pembelian::where('status_tagihan','lunas')->whereBetween('tgl_faktur',[$tanggal_awal,$tanggal_akhir])->sum('jumlah_tagihan');
+        $pembelian = Pembelian::where('status_tagihan','lunas')->whereBetween('tanggal_pengeluaran',[$tanggal_awal,$tanggal_akhir])->sum('jumlah_tagihan');
         $penjualan = Penjualan_Obat::whereBetween('tgl_transaksi',[$tanggal_awal,$tanggal_akhir])->sum('jumlah_bayar');
         
         $data['pembelian'] = $pembelian;
@@ -67,6 +67,7 @@ class LaporanController extends Controller
         }else{
 
             $input = $request->tanggal;
+            $data['input_tanggal'] = $input;
             $pecah = explode(" - ",$input);
             $tanggal_awal = date('Y-m-d',strtotime($pecah[0]));
             $tanggal_akhir = date('Y-m-d',strtotime($pecah[1]));
@@ -119,26 +120,31 @@ class LaporanController extends Controller
             return redirect()->back();
         }
         $input = $request->tanggal;
+        $data['input_tanggal'] = $input;
         $pecah = explode(" - ",$input);
         $tanggal_awal = date('Y-m-d',strtotime($pecah[0]));
         $tanggal_akhir = date('Y-m-d',strtotime($pecah[1]));
 
         if($request->type == 'semua'){
-            $pembelian =  Pembelian::whereBetween('created_at',[$tanggal_awal . ' 00:00:00',$tanggal_akhir . ' 00:00:00'])->get();
+            $pembelian =  Pembelian::whereBetween('tanggal_pengeluaran',[$tanggal_awal,$tanggal_akhir])->get();
         }elseif($request->type == 'tunai'){
-            $pembelian =  Pembelian::where('jenis','Tunai')->whereBetween('created_at',[$tanggal_awal . ' 00:00:00',$tanggal_akhir . ' 00:00:00'])->get();
+            $pembelian =  Pembelian::where('jenis','Tunai')->whereBetween('tanggal_pengeluaran',[$tanggal_awal,$tanggal_akhir])->get();
         }else{
-            
-            $pembelian =  Pembelian::where('jenis','Kredit')->whereBetween('created_at',[$tanggal_awal . ' 00:00:00',$tanggal_akhir . ' 00:00:00'])->get();
+            $pembelian =  Pembelian::where('jenis','Kredit')->whereBetween('tanggal_pengeluaran',[$tanggal_awal,$tanggal_akhir])->get();
         }
         $data['pembelian'] = $pembelian;
 
         if($request->is_detail){
             $detail = Detail_pembelian::get();
             $data['detail'] = $detail;
-            return view('back.pages.laporan.pdf_detail_pembelian',$data);
+            $pdf = PDF::loadview('back.pages.laporan.pdf_detail_pembelian',$data);
+            return $pdf->download('laporan-pembelian-'.date('dmyhis').'.pdf');
+            // return view('back.pages.laporan.pdf_detail_pembelian',$data);
         }
 
-        return view('back.pages.laporan.pdf_pembelian',$data);
+        // return view('back.pages.laporan.pdf_pembelian',$data);
+        $pdf = PDF::loadview('back.pages.laporan.pdf_pembelian',$data);
+            return $pdf->download('laporan-pembelian-'.date('dmyhis').'.pdf');
+        
     }
 }

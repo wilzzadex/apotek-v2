@@ -68,16 +68,16 @@
                         </div>
                         <div class="form-group">
                             <label>Alamat Apotek</label>
-                            <input type="text" name="alamat" value="Margahayu, Kab Bandung" placeholder="Nama Aplikasi ..." required class="form-control">
+                            <input type="text" name="alamat" value="{{ $pengaturan->alamat_aplikasi }}" placeholder="Nama Aplikasi ..." required class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Telp</label>
-                            <input type="text" name="tepl" value="087773726667" placeholder="Nama Aplikasi ..." required class="form-control">
+                            <input type="text" name="telp" value="{{ $pengaturan->no_telp }}" placeholder="Nama Aplikasi ..." required class="form-control">
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label>Email</label>
                             <input type="text" name="email" value="willy@gmail.com" placeholder="Nama Aplikasi ..." required class="form-control">
-                        </div>
+                        </div> --}}
                         <button type="submit" class="btn btn-primary float-right"> Simpan Perubahan </button>
                     </form>
                 </div>

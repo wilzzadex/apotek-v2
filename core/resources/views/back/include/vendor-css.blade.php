@@ -25,7 +25,10 @@
 		<!--end::Layout Themes-->
 		<link rel="shortcut icon" href="{{ asset('file_ref/pengaturan_aplikasi/'.$pengaturan->logo_aplikasi) }}" />
 		<style>
+<<<<<<< HEAD
 			
+=======
+>>>>>>> 00d996391d6c4f6fcd46e37710fd16428f09d062
 			.highcharts-figure, .highcharts-data-table table {
     min-width: 360px; 
     max-width: 800px;
@@ -59,4 +62,8 @@
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00d996391d6c4f6fcd46e37710fd16428f09d062
 		</style>

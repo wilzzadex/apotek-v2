@@ -119,6 +119,7 @@ class HistoriPembelianController extends Controller
     {
         $pembelian = Pembelian::find($request->id);
         $pembelian->status_tagihan = 'lunas';
+        $pembelian->tanggal_pengeluaran = date('Y-m-d');
         $pembelian->save();
     }
 }

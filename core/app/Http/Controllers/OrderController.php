@@ -219,9 +219,9 @@ class OrderController extends Controller
             }       
         }
 
-        // $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
+        $delete = Temp_Pembelian_Obat::where('user_id',$user_id)->delete();
 
-        // return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
+        return redirect(route('histori.pembelian'))->with('success','Data Berhasil disimpan');
     }
 
     public function getObatUnit(Request $request)

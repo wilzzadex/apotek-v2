@@ -8,23 +8,24 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
 		<!--end::Fonts-->
 		<!--begin::Page Vendors Styles(used by this page)-->
-		<link href="{{ asset('assets/backend/') }} /plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Page Vendors Styles-->
 		<!--begin::Global Theme Styles(used by all pages)-->
-		<link href="{{ asset('assets/backend/') }} /plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/backend/') }} /plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/backend/') }} /css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Theme Styles-->
 		<!--begin::Layout Themes(used by all pages)-->
-		<link href="{{ asset('assets/backend/') }} /css/themes/layout/header/base/light.css" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/backend/') }} /css/themes/layout/header/menu/light.css" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/backend/') }} /css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/backend/') }} /css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css" />
-		<link href="{{ asset('assets/backend/') }} /plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/css/themes/layout/header/base/light.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/css/themes/layout/header/menu/light.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/css/themes/layout/brand/dark.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/css/themes/layout/aside/dark.css') }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset('assets/backend/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
 
 		<!--end::Layout Themes-->
 		<link rel="shortcut icon" href="{{ asset('file_ref/pengaturan_aplikasi/'.$pengaturan->logo_aplikasi) }}" />
-		<script>
+		<style>
+			
 			.highcharts-figure, .highcharts-data-table table {
     min-width: 360px; 
     max-width: 800px;
@@ -58,5 +59,4 @@
 .highcharts-data-table tr:hover {
     background: #f1f7ff;
 }
-
-		</script>
+		</style>

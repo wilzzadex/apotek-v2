@@ -85,7 +85,7 @@
 </div>
 @endsection
 @section('js-custom')
-<script src="{{ asset('assets/backend') }} /plugins/custom/datatables/datatables.bundle.js"></script>
+<script src="{{ asset('assets/backend/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
 <script>
     $('#user_table').DataTable({

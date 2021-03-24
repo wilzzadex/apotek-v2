@@ -289,7 +289,7 @@ Transaksi / Pembelian Obat
 
 @endsection
 @section('js-custom')
-<script src="{{ asset('assets/backend') }} /plugins/custom/datatables/datatables.bundle.js"></script>
+<script src="{{ asset('assets/backend/plugins/custom/datatables/datatables.bundle.js') }}"></script>
 
 <script>
     $(document).ready(function () {

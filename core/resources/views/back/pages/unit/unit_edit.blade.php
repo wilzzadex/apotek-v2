@@ -34,11 +34,18 @@
                                     <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" value="{{ $unit->nama }}" name="nama" placeholder="Nama Unit" />
                                 </div>
-                                <div class="form-group">
-                                    <label>Jumlah Satuan Terkecil
-                                    <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" value="{{ $unit->jumlah_satuan_terkecil }}" name="jumlah" placeholder="Jumlah" />
-                                </div>
+                                <select type="number" class="form-control" name="jumlah" placeholder="Jumlah">
+                                    <option value="1" {{ $unit->tingkat_satuan == 1 ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $unit->tingkat_satuan == 2 ? 'selected' : '' }}>2</option>
+                                    <option value="3" {{ $unit->tingkat_satuan == 3 ? 'selected' : '' }}>3</option>
+                                    <option value="4" {{ $unit->tingkat_satuan == 4 ? 'selected' : '' }}>4</option>
+                                    <option value="5" {{ $unit->tingkat_satuan == 5 ? 'selected' : '' }}>5</option>
+                                    <option value="6" {{ $unit->tingkat_satuan == 6 ? 'selected' : '' }}>6</option>
+                                    <option value="7" {{ $unit->tingkat_satuan == 7 ? 'selected' : '' }}>7</option>
+                                    <option value="8" {{ $unit->tingkat_satuan == 8 ? 'selected' : '' }}>8</option>
+                                    <option value="9" {{ $unit->tingkat_satuan == 9 ? 'selected' : '' }}>9</option>
+                                    <option value="10" {{ $unit->tingkat_satuan == 10 ? 'selected' : '' }}>10</option>
+                                </select>
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary mr-2">Submit</button>
@@ -59,6 +66,10 @@
 <script type="text/javascript">
     @if(session('success'))
         customAlert('Sukses !','{{ session("success") }}','success')
+    @endif
+
+    @if(session('gagal'))
+        customAlert('Ditolak !','{{ session("gagal") }}','warning')
     @endif
 
     var runValidator = function () {

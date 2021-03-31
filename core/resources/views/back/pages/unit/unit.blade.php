@@ -94,6 +94,7 @@
     @if(session('success'))
         customAlert('Sukses !','{{ session("success") }}','success')
     @endif
+   
 
     function deleteUnit(obj){
         let id = $(obj).attr('data-id');
@@ -124,13 +125,21 @@
                     success: function(res){
                         KTApp.unblockPage();
                         // console.log(res);
-                        Swal.fire(
-                            "Terhapus!",
-                            "Data berhasil di hapus.",
-                            "success"
-                        ).then(function(){
-                            window.location.reload();
-                        })
+                        if(res > 0){
+                            Swal.fire(
+                                "Data tidak bisa di hapus!",
+                                "Data ini sudah di gunakan .",
+                                "warning"
+                            )
+                        }else{
+                            Swal.fire(
+                                "Terhapus!",
+                                "Data berhasil di hapus.",
+                                "success"
+                            ).then(function(){
+                                window.location.reload();
+                            })
+                        }
                     }
                 })
             }

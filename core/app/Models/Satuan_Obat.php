@@ -27,6 +27,11 @@ class Satuan_Obat extends Model
         return $this->hasOne(Satuan_Obat::class, 'unit_id' ,'unit_id_sama_dengan');
     }
 
+    public function obat()
+    {
+        return $this->hasOne(Obat::class, 'kode_obat' ,'kode_obat');
+    }
+
     // public function sama_dengan()
     // {
     //     return $this->hasOne( 'id' ,'sama_dengan');

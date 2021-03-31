@@ -6,6 +6,7 @@ use App\Models\Detail_pembelian;
 use App\Models\Kategori;
 use App\Models\Golongan;
 use App\Models\Obat;
+use App\Models\Pembelian;
 use App\Models\Unit;
 use App\Models\Satuan_Obat;
 use Facade\FlareClient\View;
@@ -140,9 +141,9 @@ class ObatController extends Controller
                             <i class="ki ki-bold-more-hor"></i>
                         </button>
                         <div class="dropdown-menu" style="">
-                            <a class="dropdown-item" href="javascript:void(0)" onclick="lihatDetail(this)" id="'.$query->id.'">Lihat Satuan</a>
-                            <a class="dropdown-item" href="javascript:void(0)">Edit</a>
-                            <a class="dropdown-item" href="javascript:void(0)">Hapus</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="lihatSatuan(this)" id="'.$query->kode_obat.'">Lihat Satuan</a>
+                            <a class="dropdown-item" href="'.route("obat.edit",$query->id).'">Edit</a>
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="deleteObat(this)" id="'.$query->id.'">Hapus</a>
                         </div>
                     </div>';
             }else{
@@ -151,7 +152,7 @@ class ObatController extends Controller
                     <i class="ki ki-bold-more-hor"></i>
                 </button>
                 <div class="dropdown-menu" style="">
-                    <a class="dropdown-item" href="javascript:void(0)" onclick="lihatDetail(this)" id="'.$query->id.'">Lihat Satuan</a>
+                    <a class="dropdown-item" href="javascript:void(0)" onclick="lihatSatuan(this)" id="'.$query->kode_obat.'">Lihat Satuan</a>
                     
                 </div>
             </div>';
@@ -161,5 +162,58 @@ class ObatController extends Controller
         ->rawColumns(['aksi','no_batch','stok','harga_jual','status'])
         ->addIndexColumn()
         ->make(true);
+    }
+
+    public function destroy(Request $request)
+    {
+        $obat = Obat::findOrFail($request->id);
+        $cek = Detail_pembelian::where('kode_obat',$obat->kode_obat)->count();
+        if($cek == 0){
+            $satuan = Satuan_Obat::where('kode_obat',$obat->kode_obat)->delete();
+            $obat->delete();
+        }
+
+        return response()->json($cek);
+    }
+
+    public function lihatSatuan(Request $request)
+    {
+        $satuan_obat = Satuan_Obat::where('kode_obat',$request->kode_obat)->orderBy('id','desc')->get();
+        $obat = Obat::where('kode_obat',$request->kode_obat)->first();
+        $data['satuan_obat'] = $satuan_obat;
+        $data['obat'] = $obat;
+        return view('back.pages.obat.satuan_detail',$data);
+    }
+
+    public function edit($id)
+    {
+        $obat = Obat::findOrFail($id);
+        $data['kategori'] = Kategori::orderBy('nama_kategori','ASC')->get();
+        $data['golongan'] = Golongan::orderBy('nama_golongan','ASC')->get();
+        $data['unit'] = Unit::orderBy('tingkat_satuan','ASC')->get();
+        $data['obat'] = $obat;
+        return view('back.pages.obat.obat_edit',$data);
+    }
+
+    public function update($id,Request $request)
+    {
+        $cstm = [
+            'unique' => 'Kode Obat sudah Terdaftar'
+        ];
+        $request->validate([
+            'kode_obat' => 'unique:obat,kode_obat,' . $id,
+        ],$cstm);
+
+        $obat = Obat::findOrFail($id);
+        $obat->kode_obat = strtoupper($request->kode_obat);
+        $obat->nama_obat = $request->nama_obat;
+        $obat->kategori_id = $request->kategori_obat;
+        $obat->golongan_id = $request->golongan_obat;
+        $obat->harga_jual = 0;
+        $obat->stok_minimum = $request->stok_minimum;
+        $obat->keterangan = $request->keterangan;
+        $obat->save();
+
+        return redirect(route('obat'))->with('success','Data Berhasil di ubah');
     }
 }

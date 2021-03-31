@@ -109,13 +109,24 @@
                     success: function(res){
                         KTApp.unblockPage();
                         // console.log(res);
-                        Swal.fire(
-                            "Terhapus!",
-                            "Data berhasil di hapus.",
-                            "success"
-                        ).then(function(){
-                            window.location.reload();
-                        })
+                        if(res == 'yes'){
+                            Swal.fire(
+                                "Terhapus!",
+                                "Data berhasil di hapus.",
+                                "success"
+                            ).then(function(){
+                                window.location.reload();
+                            })
+                        }else{
+                            Swal.fire(
+                                "Data Tidak bisa dihapus!",
+                                "akun ini sudah melakukan transaksi",
+                                "warning"
+                            ).then(function(){
+                                window.location.reload();
+                            })
+                        }
+                       
                     }
                 })
             }

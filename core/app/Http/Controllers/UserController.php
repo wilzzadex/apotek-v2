@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Pembelian;
+use App\Models\Penjualan_Obat;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -57,7 +60,21 @@ class UserController extends Controller
 
     public function destroy(Request $request)
     {
-        $user = User::findOrFail($request->id)->delete();
+        $user = User::findOrFail($request->id);
+        if($user->role == 'admin'){
+            $cek = Pembelian::where('user_id',$user->id)->count();
+        }else{
+            $cek = Penjualan_Obat::where('user_id',$user->id)->count();
+        }
+
+        if($cek > 0){
+            $d = 'no';
+        }else{
+            $d = 'yes';
+            $user->delete();
+        }
+
+        return response()->json($d);
     }
 
 }

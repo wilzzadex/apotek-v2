@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Pembelian;
 use App\Models\Suplier;
 use Illuminate\Http\Request;
 
@@ -50,6 +52,14 @@ class SuplierController extends Controller
 
     public function destroy(Request $request)
     {
-        $suplier = Suplier::findOrFail($request->id)->delete();
+        $suplier = Suplier::findOrFail($request->id);
+
+        $cek = Pembelian::where('suplier_id',$suplier->id)->count();
+
+        if($cek == 0){
+            $suplier->delete();
+        }
+
+        return response()->json($cek);
     }
 }

@@ -58,6 +58,10 @@ Route::group(['middleware' => 'auth'], function(){
             Route::post('store',['as' => 'obat.store','uses' => 'ObatController@store']);
             Route::get('getsatuan',['as' => 'get.satuan','uses' => 'ObatController@getSatuan']);
             Route::get('data',['as' => 'obat.data','uses' => 'ObatController@dataObat']);
+            Route::get('destroy',['as' => 'obat.destroy','uses' => 'ObatController@destroy']);
+            Route::get('lihat_satuan',['as' => 'obat.lihatSatuan','uses' => 'ObatController@lihatSatuan']);
+            Route::get('edit/{id}',['as' => 'obat.edit','uses' => 'ObatController@edit']);
+            Route::post('update/{id}',['as' => 'obat.update','uses' => 'ObatController@update']);
         });
 
         Route::prefix('transaksi')->group(function(){

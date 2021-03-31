@@ -58,6 +58,10 @@
     </div>
     <!--end::Entry-->
 </div>
+
+<div class="modal fade" id="modalSatuan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+</div>
 @endsection
 @section('js-custom')
 <script src="{{ asset('assets/backend/plugins/custom/datatables/datatables.bundle.js') }}"></script>
@@ -92,8 +96,8 @@
         ]
     })
 
-    function deleteSuplier(obj){
-        let id = $(obj).attr('data-id');
+    function deleteObat(obj){
+        let id = $(obj).attr('id');
         // console.log(id);
         Swal.fire({
             title: "Anda Yakin ?",
@@ -106,7 +110,7 @@
         }).then(function(result) {
             if (result.value) {
                 $.ajax({
-                    url : '{{ route("suplier.destroy") }}',
+                    url : '{{ route("obat.destroy") }}',
                     type : 'get',
                     data : {
                         id : id,
@@ -120,18 +124,51 @@
                     },
                     success: function(res){
                         KTApp.unblockPage();
-                        // console.log(res);
-                        Swal.fire(
-                            "Terhapus!",
-                            "Data berhasil di hapus.",
-                            "success"
-                        ).then(function(){
-                            window.location.reload();
-                        })
+                        console.log(res);
+                        if(res > 0){
+                            Swal.fire(
+                                "Data tidak bisa di hapus!",
+                                "Data obat sudah di gunakan",
+                                "warning"
+                            )
+                        }else{
+                            Swal.fire(
+                                "Terhapus!",
+                                "Data berhasil di hapus.",
+                                "success"
+                            ).then(function(){
+                                window.location.reload();
+                            })
+                        }
                     }
                 })
             }
         });
+    }
+
+    function lihatSatuan(thiss){
+        let kode_obat = $(thiss).attr('id');
+        $.ajax({
+            url  : '{{ route("obat.lihatSatuan") }}',
+            type : 'get',
+            data : {
+                kode_obat : kode_obat
+            },
+            beforeSend : function(){
+                
+                KTApp.blockPage({
+                    overlayColor: '#000000',
+                    state: 'danger',
+                    message: 'Silahkan Tunggu...'
+                });
+            },
+            success : function(res){
+                KTApp.unblockPage();
+                $('#modalSatuan').html(res);
+                $('#modalSatuan').modal('show');
+            }
+
+        })
     }
 </script>
 @endsection
